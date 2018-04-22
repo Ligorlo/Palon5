@@ -1,0 +1,14 @@
+﻿<Properties StartupConfiguration="{E12743A9-99FC-412C-B264-082A2D2C043F}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ToCreate/Form2.cs">
+    <Files>
+      <File FileName="ToCreate/Form2.cs" Line="11" Column="7" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.ToCreate PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>
