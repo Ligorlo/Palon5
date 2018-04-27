@@ -2,6 +2,8 @@
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 namespace ToCreate
 {
     public partial class Form7 : Form
@@ -16,22 +18,34 @@ namespace ToCreate
         }
         string path;
         string[,] toconsole;
-        public Form7(string path)
+        bool boool;
+        public Form7(string path, bool boool)
         {
+            this.boool = boool;
             this.path = path;
             InitializeComponent();
-           
-            string [] savednames = File.ReadAllLines($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Devices.txt");
-            string[,] forlistbox = new string[savednames.Length, 2];
-            for (int i = 0; i < savednames.Length; i++)
+            FileStream s = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Devices.txt", FileMode.Open);
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Devices[]));
+            Devices [] device = (Devices [])ser.ReadObject(s);
+            string[,] forlistbox = new string[device.Length, 2];
+            for (int i = 0; i < forlistbox.GetLength(0); i++)
             {
-                string [] x = savednames[i].Split(new string[] { " bluetooth " }, StringSplitOptions.RemoveEmptyEntries);
-                forlistbox[i, 0] = x[0];
-                forlistbox[i, 1] = x[1];
+                forlistbox[i, 0] = Encoding.ASCII.GetString(device[i].name);
+                    forlistbox[i, 1] = Encoding.ASCII.GetString(device[i].adress);
                 listBox1.Items.Add(forlistbox[i, 0]);
             }
+            //string [] savednames = File.ReadAllLines($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Devices.txt");
+            //string[,] forlistbox = new string[savednames.Length, 2];
+            //for (int i = 0; i < savednames.Length; i++)
+            //{
+            //    string [] x = savednames[i].Split(new string[] { " bluetooth " }, StringSplitOptions.RemoveEmptyEntries);
+            //    forlistbox[i, 0] = x[0];
+            //    forlistbox[i, 1] = x[1];
+            //    listBox1.Items.Add(forlistbox[i, 0]);
+            //}
             toconsole = forlistbox;
-            
+            s.Close();
+
 
         }
 
@@ -55,7 +69,7 @@ namespace ToCreate
                             q++;
                         }
                         toconsole[i, 1] = Encoding.ASCII.GetString(devadress);
-                        Form3 pass = new Form3(path, toconsole[i, 0], toconsole[i, 1]);
+                        Form3 pass = new Form3(path, toconsole[i, 0], toconsole[i, 1], boool );
                         pass.ShowDialog();
                         this.Close();
                         break;

@@ -17,14 +17,14 @@ namespace ToCreate
             count++;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-          try
-          {
+          //try
+         // {
                 Application.Run(new Form1(args));
-          }
-          catch (System.ObjectDisposedException)
-          {
+         // }
+         // catch (System.ObjectDisposedException)
+         // {
 
-          }
+         // }
             Application.Exit();
         }
     }
