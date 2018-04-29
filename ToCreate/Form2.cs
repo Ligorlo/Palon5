@@ -1,4 +1,6 @@
-﻿using System;
+﻿//#if BlueZ
+
+using System;
 using System.Windows.Forms;
 using InTheHand.Net.Sockets;
 using InTheHand.Net.Bluetooth;
@@ -7,6 +9,14 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Diagnostics;
+using InTheHand.Windows.Forms;
+using InTheHand.Net.Bluetooth.AttributeIds;
+using InTheHand.Net.Bluetooth.Factory;
+using InTheHand.Net.Bluetooth.Msft;
+using InTheHand.Net.Bluetooth.Widcomm;
+using System.Threading;
+using System.Runtime.InteropServices;
+
 namespace ToCreate
 {
     /// <summary>
@@ -132,7 +142,16 @@ namespace ToCreate
                 // ищем устройства
                 BluetoothClient bc = new BluetoothClient();
                 info = null;
-                info = bc.DiscoverDevices();
+                Stopwatch s = new Stopwatch();
+                s.Start();
+                //bc.InquiryLength = new TimeSpan(0, 0, 5);
+               // S l = new S();
+               info = bc.DiscoverDevices(3, true, true, true, true);
+                
+                //info=  bc.EndDiscoverDevices(l);
+                s.Stop();
+                MessageBox.Show(s.Elapsed.ToString());
+            
                 // переносим информацию в список устройств
                 foreach (BluetoothDeviceInfo device in info)
                 {
@@ -156,7 +175,8 @@ namespace ToCreate
                 MessageBox.Show("Please turn on bluetooth on your computer");
             }
         }
-
+       
+     
         // кнопка выбора из старых
         private void button2_Click(object sender, EventArgs e)
         {
@@ -192,6 +212,9 @@ namespace ToCreate
             this.adress = adress;
         }
     }
+
+   
 }
    
 
+//#endif

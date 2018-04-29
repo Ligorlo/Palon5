@@ -102,6 +102,7 @@ namespace ToCreate
                     key[i] = (byte)(key[i] ^ onlykey[q]);
                 }
                 File.Move(path, Path.ChangeExtension(path, ".code3"));
+                button1.Enabled = false;
             }
             else
             {
@@ -139,6 +140,7 @@ namespace ToCreate
                     key[i] = (byte)(key[i] ^ onlykey[q]);
                 }
                 File.Move(path, Path.ChangeExtension(path, ".code4"));
+                button1.Enabled = false;
             }
         }
         // кнопка шифрования

@@ -7,12 +7,15 @@ using System.Security.Principal;
 using InTheHand.Net.Sockets;
 using InTheHand.Net.Bluetooth;
 using System.IO.Compression;
+using System.Diagnostics;
 namespace ToCreate
 {
+  
     // форма раскодирования
     public partial class Form4 : Form
     {
-        bool directory  = true;
+        static Stopwatch s = new Stopwatch();
+      bool directory  = true;
         string[] args;
         // для десериализации
         ToCode cod;
@@ -105,7 +108,7 @@ namespace ToCreate
                 bool b = true;
                 if (args.Length == 2)
                     b = false;
-                
+
                 // форма для шифрования при закрытии
                 Form5 closing = new Form5(path, key, cod, num, b, directory);
                 this.Hide();
@@ -114,6 +117,40 @@ namespace ToCreate
                     closing.ShowDialog();
                 }
                 this.Close();
+            }
+        }
+        string devicename;
+        string deviceadress;
+        int compare = 0;
+        public void BluetoothDescovery(object sender, DiscoverDevicesEventArgs e)
+        {
+            if(compare == 0)
+            if(e.Devices!= null)
+            {
+                foreach (var item in e.Devices)
+                {
+                    if(item.DeviceAddress.ToString() == deviceadress)
+                    {
+                        compare = 1;
+                            s.Stop();
+                            MessageBox.Show(s.Elapsed.ToString());
+                            Redeem();
+                    }
+                }
+            }
+        }
+        public void BluetoothEndDescovery(object sender, DiscoverDevicesEventArgs e)
+        {
+            if (compare == 0)
+            {
+                // если устройства нет рядом просим ввести пароль
+                Form6 password = new Form6(cod);
+                password.ShowDialog();
+                // проверка верности пароля
+                if (password.Pasbool)
+                {
+                    Redeem();
+                }
             }
         }
         private void button1_Click(object sender, EventArgs e)
@@ -126,9 +163,9 @@ namespace ToCreate
                     DataContractJsonSerializer json2 = new DataContractJsonSerializer(typeof(Connectwithakey));
                     DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(ToCode));
                     // ещё один поиск устройств
-                    BluetoothClient bc = new BluetoothClient();
-                    BluetoothDeviceInfo[] info = null;
-                    info = bc.DiscoverDevices();
+                   // BluetoothClient bc = new BluetoothClient();
+                   // BluetoothDeviceInfo[] info = null;
+                    //info = bc.DiscoverDevices();
                     // чтение основного файла
                     FileStream st = new FileStream(path, FileMode.Open);
                     Connectwithakey con = (Connectwithakey)json2.ReadObject(st);
@@ -160,40 +197,35 @@ namespace ToCreate
                     l.Close();
                     // удаляем вспомогательный файл
                     File.Delete(help);
-                    bool b = false;
                     // проверяем совпадение устройста 
-                    foreach (BluetoothDeviceInfo item in info)
-                    {
-                        if (item.DeviceName == cod.DeviceName && item.DeviceAddress.ToString() == cod.DeviceAdress)
-                        {
-                            b = true;
-                        }
-                    }
-                    if (b)
-                    {
-                        // метод временного расшифрования
-                        Redeem();
-                    }
-                    else
-                    {
-                        // если устройства нет рядом просим ввести пароль
-                        Form6 password = new Form6(cod);
-                        password.ShowDialog();
-                        // проверка верности пароля
-                        if (password.Pasbool)
-                        {
-                            Redeem();
-                        }
-                    }
+                    devicename = cod.DeviceName;
+                    deviceadress = cod.DeviceAdress;
+                    BluetoothComponent component = new BluetoothComponent();
+                    
+                    component.DiscoverDevicesProgress += BluetoothDescovery;
+                    component.DiscoverDevicesComplete += BluetoothEndDescovery;
+                    component.DiscoverDevicesAsync(10, true, false, true,true,0);
+                   // while (compare == 0)
+                    //{
+
+                    //}
+                    //foreach (BluetoothDeviceInfo item in info)
+                    //{
+                    //    if (item.DeviceName == cod.DeviceName && item.DeviceAddress.ToString() == cod.DeviceAdress)
+                    //    {
+                    //        b = true;
+                    //    }
+                    //}
+                    
                 }
                 else
                 {
                     DataContractJsonSerializer json2 = new DataContractJsonSerializer(typeof(Connectwithakey));
                     DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(ToCode));
                     // ещё один поиск устройств
-                    BluetoothClient bc = new BluetoothClient();
-                    BluetoothDeviceInfo[] info = null;
-                    info = bc.DiscoverDevices();
+                   // BluetoothClient bc = new BluetoothClient();
+                   // BluetoothDeviceInfo[] info = null;
+                   // info = bc.DiscoverDevices();
                     // чтение основного файла
                     FileStream st = new FileStream(path, FileMode.Open);
                     Connectwithakey con = (Connectwithakey)json2.ReadObject(st);
@@ -225,31 +257,15 @@ namespace ToCreate
                     l.Close();
                     // удаляем вспомогательный файл
                     File.Delete(help);
-                    bool b = false;
                     // проверяем совпадение устройста 
-                    foreach (BluetoothDeviceInfo item in info)
-                    {
-                        if (item.DeviceName == cod.DeviceName && item.DeviceAddress.ToString() == cod.DeviceAdress)
-                        {
-                            b = true;
-                        }
-                    }
-                    if (b)
-                    {
-                        // метод временного расшифрования
-                        Redeem();
-                    }
-                    else
-                    {
-                        // если устройства нет рядом просим ввести пароль
-                        Form6 password = new Form6(cod);
-                        password.ShowDialog();
-                        // проверка верности пароля
-                        if (password.Pasbool)
-                        {
-                            Redeem();
-                        }
-                    }
+                    s.Start();
+                    devicename = cod.DeviceName;
+                    deviceadress = cod.DeviceAdress;
+                    BluetoothComponent component = new BluetoothComponent();
+
+                    component.DiscoverDevicesProgress += BluetoothDescovery;
+                    component.DiscoverDevicesComplete += BluetoothEndDescovery;
+                    component.DiscoverDevicesAsync(10, true, false, true, true, 0);
                 }
                 
             }

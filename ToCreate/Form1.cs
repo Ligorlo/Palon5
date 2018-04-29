@@ -12,7 +12,7 @@ namespace ToCreate
         public Form1(string[] args)
         {
             this.assosiatedfile = args;
-     //  args = new string[1];args[0] = @"\\Mac\Home\Desktop\Fa.code4";
+       //   args = new string[1];args[0] = @"\\Mac\Home\Desktop\р.code3";
            // args - возможный путь
             //( который появляется при открытии файла code3, и включается раскодирование)
             // если же это пустой массив, то открывается сама программа кодирования

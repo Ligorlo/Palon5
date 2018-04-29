@@ -23,7 +23,6 @@
 \\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\InTheHand.Net.Personal.dll
 \\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\System.IO.Compression.ZipFile.dll
 \\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\InTheHand.Net.Personal.xml
-\\Mac\Home\Desktop\Palon\ToCreate\obj\Debug\ToCreate.csprojResolveAssemblyReference.cache
 \\Mac\Home\Desktop\Palon\ToCreate\obj\Debug\ToCreate.Form1.resources
 \\Mac\Home\Desktop\Palon\ToCreate\obj\Debug\ToCreate.Form2.resources
 \\Mac\Home\Desktop\Palon\ToCreate\obj\Debug\ToCreate.Form3.resources
@@ -37,3 +36,15 @@
 \\Mac\Home\Desktop\Palon\ToCreate\obj\Debug\ToCreate.csproj.CopyComplete
 \\Mac\Home\Desktop\Palon\ToCreate\obj\Debug\ToCreate.exe
 \\Mac\Home\Desktop\Palon\ToCreate\obj\Debug\ToCreate.pdb
+\\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\GalaSoft.MvvmLight.dll
+\\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\GalaSoft.MvvmLight.Extras.dll
+\\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+\\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\System.Windows.Interactivity.dll
+\\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\GalaSoft.MvvmLight.pdb
+\\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\GalaSoft.MvvmLight.xml
+\\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
+\\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\GalaSoft.MvvmLight.Extras.xml
+\\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+\\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+\\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\System.Windows.Interactivity.xml
+\\Mac\Home\Desktop\Palon\ToCreate\obj\Debug\ToCreate.csprojResolveAssemblyReference.cache
