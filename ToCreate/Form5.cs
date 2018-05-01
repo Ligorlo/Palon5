@@ -5,20 +5,44 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Security.Principal;
 using System.IO.Compression;
+using System.Security.Cryptography;
 namespace ToCreate
 {
     // форма для шифрования (для безопасности шифрует если её закрываешь)
     public partial class Form5 : Form
     {
+        private static byte[] EncryptAES(string tocode, byte[] Key, byte[] IV)
+        {
+            byte[] encrypted;
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Key;
+                aes.IV = IV;
+                ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter sw = new StreamWriter(csEncrypt))
+                        {
+                            sw.Write(tocode);
+                        }
+                        encrypted = ms.ToArray();
+                    }
+                }
+            }
+            return encrypted;
+        }
         // поле пути 
         string path;
         // поле ключа
         byte[] key;
+        byte[] IV;
         int num;
         bool directory;
         // для сериализации
         ToCode cod;
-        public Form5(string path, byte[] key, ToCode cod, int  num, bool b, bool directory )
+        public Form5(string path, byte[] key, byte[] IV, ToCode cod, int  num, bool b, bool directory )
         {
             this.directory = directory;
             if (directory)
@@ -32,6 +56,7 @@ namespace ToCreate
                 {
                     //Process s = new Process();
                     //this.FormClosing += proove;
+                    this.IV = IV;
                     this.key = key;
                     // изменяем обратно расширение
                     path = Path.ChangeExtension(path, cod.Rassh);
@@ -57,7 +82,7 @@ namespace ToCreate
                     // изменяем обратно расширение
                     // path = Path.ChangeExtension(path, "");
                     // 
-                   
+                    this.IV = IV;
                     this.path = path.Remove(path.Length - 1);
                     this.num = num;
                     this.cod = cod;
@@ -73,15 +98,9 @@ namespace ToCreate
             {
                 byte[] bytearr2 = File.ReadAllBytes(path);
                 File.Delete(path);
-                int q = 0;
-                for (int i = 0; i < bytearr2.Length; i++)
-                {
-                    if (q == key.Length)
-                        q = 0;
-                    bytearr2[i] = (byte)(bytearr2[i] ^ key[q]);
-                    q++;
-                }
-                Connectwithakey main = new Connectwithakey(bytearr2, Encoding.ASCII.GetBytes(num.ToString()));
+                string Inbaseforencrypt = Convert.ToBase64String(bytearr2);
+                byte[] tofile = EncryptAES(Inbaseforencrypt, key, IV);
+                Connectwithakey main = new Connectwithakey(tofile, Encoding.ASCII.GetBytes(num.ToString()));
                 DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Connectwithakey));
                 FileStream file = new FileStream(path, FileMode.OpenOrCreate);
 
@@ -94,7 +113,7 @@ namespace ToCreate
                 WindowsIdentity win = new WindowsIdentity(accountToken);
                 string ID = win.User.ToString();
                 byte[] onlykey = Encoding.UTF8.GetBytes(ID);
-                q = 0;
+               int q = 0;
                 for (int i = 0; i < key.Length; i++)
                 {
                     if (q == onlykey.Length)
@@ -111,15 +130,9 @@ namespace ToCreate
                 path = Path.ChangeExtension(path, cod.Rassh);
                 byte[] bytearr2 = File.ReadAllBytes(path);
                 File.Delete(path);
-                int q = 0;
-                for (int i = 0; i < bytearr2.Length; i++)
-                {
-                    if (q == key.Length)
-                        q = 0;
-                    bytearr2[i] = (byte)(bytearr2[i] ^ key[q]);
-                    q++;
-                }
-                Connectwithakey main = new Connectwithakey(bytearr2, Encoding.ASCII.GetBytes(num.ToString()));
+                string Inbaseforencrypt = Convert.ToBase64String(bytearr2);
+                byte[] tofile = EncryptAES(Inbaseforencrypt, key, IV);
+                Connectwithakey main = new Connectwithakey(tofile, Encoding.ASCII.GetBytes(num.ToString()));
                 DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Connectwithakey));
                 FileStream file = new FileStream(path, FileMode.OpenOrCreate);
 
@@ -132,7 +145,7 @@ namespace ToCreate
                 WindowsIdentity win = new WindowsIdentity(accountToken);
                 string ID = win.User.ToString();
                 byte[] onlykey = Encoding.UTF8.GetBytes(ID);
-                q = 0;
+               int q = 0;
                 for (int i = 0; i < key.Length; i++)
                 {
                     if (q == onlykey.Length)

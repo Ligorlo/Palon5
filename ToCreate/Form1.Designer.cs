@@ -35,12 +35,15 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.button3 = new System.Windows.Forms.Button();
+            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.button2.Location = new System.Drawing.Point(12, 137);
+            this.button2.Location = new System.Drawing.Point(12, 130);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(149, 41);
             this.button2.TabIndex = 3;
@@ -51,7 +54,7 @@
             // Capturing
             // 
             this.Capturing.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Capturing.Location = new System.Drawing.Point(12, 28);
+            this.Capturing.Location = new System.Drawing.Point(12, 40);
             this.Capturing.Name = "Capturing";
             this.Capturing.Size = new System.Drawing.Size(149, 41);
             this.Capturing.TabIndex = 2;
@@ -65,17 +68,37 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(193, 28);
+            this.button1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button1.Location = new System.Drawing.Point(193, 40);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(149, 41);
             this.button1.TabIndex = 4;
             this.button1.Text = "Capture Folder";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // folderBrowserDialog1
             // 
             this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.button3.Location = new System.Drawing.Point(193, 130);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(149, 41);
+            this.button3.TabIndex = 5;
+            this.button3.Text = "Redeem Folder";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // openFileDialog2
+            // 
+            this.openFileDialog2.FileName = "openFileDialog2";
+            // 
+            // openFileDialog3
+            // 
+            this.openFileDialog3.FileName = "openFileDialog3";
             // 
             // Form1
             // 
@@ -83,6 +106,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(354, 226);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.Capturing);
@@ -102,6 +126,9 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.OpenFileDialog openFileDialog3;
     }
 }
 

@@ -8,14 +8,57 @@ using InTheHand.Net.Sockets;
 using InTheHand.Net.Bluetooth;
 using System.IO.Compression;
 using System.Diagnostics;
+using System.Security.Cryptography;
 namespace ToCreate
 {
   
+
     // форма раскодирования
     public partial class Form4 : Form
     {
-        static Stopwatch s = new Stopwatch();
-      bool directory  = true;
+        static string DecryptAES(byte[] tocode, byte[] Key
+, byte[] IV)
+        {
+
+
+            // Declare the string used to hold
+            // the decrypted text.
+            string plaintext = null;
+
+            // Create an Aes object
+            // with the specified key and IV.
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = Key;
+                aesAlg.IV = IV;
+
+                // Create a decrytor to perform the stream transform.
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key
+, aesAlg.IV);
+
+                // Create the streams used for decryption.
+                using (MemoryStream msDecrypt = new MemoryStream(tocode))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt
+, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(
+csDecrypt))
+                        {
+
+                            // Read the decrypted bytes from the decrypting  stream
+                            // and place them in a string.
+                            plaintext = srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+
+            }
+
+            return plaintext;
+
+        }
+        bool directory  = true;
         string[] args;
         // для десериализации
         ToCode cod;
@@ -43,6 +86,7 @@ namespace ToCreate
             {
                 // расшифровываем сам ключ
                 byte[] key = cod.file;
+                byte[] IV = cod.IV;
                 byte[] onlykey = Encoding.UTF8.GetBytes(ID);
                 int q = 0;
                 for (int i = 0; i < key.Length; i++)
@@ -52,27 +96,25 @@ namespace ToCreate
                     key[i] = (byte)(key[i] ^ onlykey[q]);
                 }
                 // расшировываем файл
-                q = 0;
-                for (int i = 0; i < FindkeyNumber.Length; i++)
-                {
-                    if (q == key.Length)
-                        q = 0;
-                    FindkeyNumber[i] = (byte)(FindkeyNumber[i] ^ key[q]);
-                    q++;
-                }
+                string todecr = DecryptAES(FindkeyNumber, key, IV);
                 File.Delete(path);
+                byte [] bytefile = Convert.FromBase64String(todecr);
                 // создаем файл со старым расширением
-                File.WriteAllBytes(path, FindkeyNumber);
+                File.WriteAllBytes(path, bytefile);
                 File.Move(path, Path.ChangeExtension(path, cod.Rassh));
                 bool b = true;
                 if (args.Length == 2)
                     b = false;
                 // форма для шифрования при закрытии
-                Form5 closing = new Form5(path, key, cod, num, b, directory);
+                Form5 closing = new Form5(path, key, IV, cod, num, b, directory);
                 this.Hide();
                 if (b == true)
                 {
                     closing.ShowDialog();
+                }
+                else
+                {
+                    File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
                 }
                 this.Close();
             }
@@ -81,6 +123,7 @@ namespace ToCreate
                 directory = false;
                 // расшифровываем сам ключ
                 byte[] key = cod.file;
+                byte[] IV = cod.IV;
                 byte[] onlykey = Encoding.UTF8.GetBytes(ID);
                 int q = 0;
                 for (int i = 0; i < key.Length; i++)
@@ -90,18 +133,16 @@ namespace ToCreate
                     key[i] = (byte)(key[i] ^ onlykey[q]);
                 }
                 // расшировываем файл
-                q = 0;
-                for (int i = 0; i < FindkeyNumber.Length; i++)
-                {
-                    if (q == key.Length)
-                        q = 0;
-                    FindkeyNumber[i] = (byte)(FindkeyNumber[i] ^ key[q]);
-                    q++;
-                }
+                string todecr = DecryptAES(FindkeyNumber, key, IV);
                 File.Delete(path);
+                byte[] bytefile = Convert.FromBase64String(todecr);
                 // создаем файл со старым расширением
-                File.WriteAllBytes(path, FindkeyNumber);
+                //File.WriteAllBytes(path, bytefile);
+                // создаем файл со старым расширением
+                File.WriteAllBytes(path, bytefile);
                 File.Move(path, Path.ChangeExtension(path, cod.Rassh));
+
+                File.Delete(path);
                 ZipFile.ExtractToDirectory(Path.ChangeExtension(path, cod.Rassh), Path.ChangeExtension(path, ""));
                 File.Delete(Path.ChangeExtension(path, cod.Rassh));
                 path = Path.ChangeExtension(path, "");
@@ -110,11 +151,15 @@ namespace ToCreate
                     b = false;
 
                 // форма для шифрования при закрытии
-                Form5 closing = new Form5(path, key, cod, num, b, directory);
+                Form5 closing = new Form5(path, key,IV,  cod, num, b, directory);
                 this.Hide();
                 if (b == true)
                 {
                     closing.ShowDialog();
+                }
+                else
+                {
+                    File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt");
                 }
                 this.Close();
             }
@@ -132,8 +177,6 @@ namespace ToCreate
                     if(item.DeviceAddress.ToString() == deviceadress)
                     {
                         compare = 1;
-                            s.Stop();
-                            MessageBox.Show(s.Elapsed.ToString());
                             Redeem();
                     }
                 }
@@ -160,6 +203,7 @@ namespace ToCreate
                 string k = Path.GetExtension(path);
                 if (k == ".code3")
                 {
+                    button1.Enabled = false;
                     DataContractJsonSerializer json2 = new DataContractJsonSerializer(typeof(Connectwithakey));
                     DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(ToCode));
                     // ещё один поиск устройств
@@ -258,7 +302,6 @@ namespace ToCreate
                     // удаляем вспомогательный файл
                     File.Delete(help);
                     // проверяем совпадение устройста 
-                    s.Start();
                     devicename = cod.DeviceName;
                     deviceadress = cod.DeviceAdress;
                     BluetoothComponent component = new BluetoothComponent();
@@ -271,14 +314,123 @@ namespace ToCreate
             }
             else
             {
-                // если устройства нет рядом просим ввести пароль
-                Form6 password = new Form6(cod);
-                password.ShowDialog();
-                // проверка верности пароля
-                if (password.Pasbool)
+                string k = Path.GetExtension(path);
+                if (k == ".code3")
                 {
-                    Redeem();
+                    button1.Enabled = false;
+                    DataContractJsonSerializer json2 = new DataContractJsonSerializer(typeof(Connectwithakey));
+                    DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(ToCode));
+                    // ещё один поиск устройств
+                    // BluetoothClient bc = new BluetoothClient();
+                    // BluetoothDeviceInfo[] info = null;
+                    //info = bc.DiscoverDevices();
+                    // чтение основного файла
+                    FileStream st = new FileStream(path, FileMode.Open);
+                    Connectwithakey con = (Connectwithakey)json2.ReadObject(st);
+                    FindkeyNumber = con.file;
+                    // номер ключа
+                    this.num = int.Parse(Encoding.ASCII.GetString(con.keynumber));
+                    st.Close();
+                    // извлечение ключа из файла
+                    byte[] serkey = File.ReadAllBytes($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
+                    //безопастность (учетная запись)
+                    IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
+                    WindowsIdentity win = new WindowsIdentity(accountToken);
+                    // раскодируем
+                    ID = win.User.ToString();
+                    byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
+                    int q = 0;
+                    for (int i = 0; i < serkey.Length; i++)
+                    {
+                        if (q == tocodekey.Length)
+                            q = 0;
+                        serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
+                    }
+                    // создём вспомогательный файл для десериализации и извдечение полей класса
+                    string help = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}Help.txt";
+                    File.Create(help).Close();
+                    File.WriteAllBytes(help, serkey);
+                    FileStream l = new FileStream(help, FileMode.Open);
+                    cod = (ToCode)json.ReadObject(l);
+                    l.Close();
+                    // удаляем вспомогательный файл
+                    File.Delete(help);
+                    // проверяем совпадение устройста 
+                    devicename = cod.DeviceName;
+                    deviceadress = cod.DeviceAdress;
+                    // если устройства нет рядом просим ввести пароль
+                    Form6 password = new Form6(cod);
+                    password.ShowDialog();
+                    // проверка верности пароля
+                    if (password.Pasbool)
+                    {
+                        Redeem();
+                    }
+                    // while (compare == 0)
+                    //{
+
+                    //}
+                    //foreach (BluetoothDeviceInfo item in info)
+                    //{
+                    //    if (item.DeviceName == cod.DeviceName && item.DeviceAddress.ToString() == cod.DeviceAdress)
+                    //    {
+                    //        b = true;
+                    //    }
+                    //}
+
                 }
+                else
+                {
+                    DataContractJsonSerializer json2 = new DataContractJsonSerializer(typeof(Connectwithakey));
+                    DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(ToCode));
+                    // ещё один поиск устройств
+                    // BluetoothClient bc = new BluetoothClient();
+                    // BluetoothDeviceInfo[] info = null;
+                    // info = bc.DiscoverDevices();
+                    // чтение основного файла
+                    FileStream st = new FileStream(path, FileMode.Open);
+                    Connectwithakey con = (Connectwithakey)json2.ReadObject(st);
+                    FindkeyNumber = con.file;
+                    // номер ключа
+                    this.num = int.Parse(Encoding.ASCII.GetString(con.keynumber));
+                    st.Close();
+                    // извлечение ключа из файла
+                    byte[] serkey = File.ReadAllBytes($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt");
+                    //безопастность (учетная запись)
+                    IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
+                    WindowsIdentity win = new WindowsIdentity(accountToken);
+                    // раскодируем
+                    ID = win.User.ToString();
+                    byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
+                    int q = 0;
+                    for (int i = 0; i < serkey.Length; i++)
+                    {
+                        if (q == tocodekey.Length)
+                            q = 0;
+                        serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
+                    }
+                    // создём вспомогательный файл для десериализации и извдечение полей класса
+                    string help = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}Help.txt";
+                    File.Create(help).Close();
+                    File.WriteAllBytes(help, serkey);
+                    FileStream l = new FileStream(help, FileMode.Open);
+                    cod = (ToCode)json.ReadObject(l);
+                    l.Close();
+                    // удаляем вспомогательный файл
+                    File.Delete(help);
+                    // проверяем совпадение устройста 
+                    devicename = cod.DeviceName;
+                    deviceadress = cod.DeviceAdress;
+                    // если устройства нет рядом просим ввести пароль
+                    Form6 password = new Form6(cod);
+                    password.ShowDialog();
+                    // проверка верности пароля
+                    if (password.Pasbool)
+                    {
+                        Redeem();
+                    }
+                }
+                
             }
         }
     }

@@ -47,4 +47,3 @@
 \\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
 \\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\Microsoft.Practices.ServiceLocation.xml
 \\Mac\Home\Desktop\Palon\ToCreate\bin\Debug\System.Windows.Interactivity.xml
-\\Mac\Home\Desktop\Palon\ToCreate\obj\Debug\ToCreate.csprojResolveAssemblyReference.cache

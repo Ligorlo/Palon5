@@ -12,8 +12,11 @@ namespace ToCreate
         public Form1(string[] args)
         {
             this.assosiatedfile = args;
-       //   args = new string[1];args[0] = @"\\Mac\Home\Desktop\р.code3";
-           // args - возможный путь
+
+
+
+            //args = new string[1];args[0] = @"\\Mac\Home\Desktop\P.code4";
+            // args - возможный путь
             //( который появляется при открытии файла code3, и включается раскодирование)
             // если же это пустой массив, то открывается сама программа кодирования
             // запуск основной программы
@@ -29,10 +32,16 @@ namespace ToCreate
                 this.Hide();
                 Form4 Decode = new Form4(args);
                 Decode.ShowDialog();
-                this.Close();
+                this.Shown += new EventHandler(MyForm_CloseOnStart);
+                //this.Close();
             }
         }
-       // кнопка освобождения (Redeem) или декодирования файла без обратного кодирования
+        private void MyForm_CloseOnStart(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        // кнопка освобождения (Redeem) или декодирования файла без обратного кодирования
         private void button2_Click(object sender, EventArgs e)
         {
             // путь к выбранному файлу
@@ -52,7 +61,7 @@ namespace ToCreate
                 // вызов формы декодирования
                 Form4 Decode = new Form4(assosiatedfile);
                 Decode.ShowDialog();
-                this.Close();
+              this.Close();
             }
         }
         // кнопка захвата (Capture) закодирования
@@ -60,10 +69,10 @@ namespace ToCreate
         {
             // путь выбранный пользователем
             string path = "";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openFileDialog2.ShowDialog() == DialogResult.OK)
             {
-                path = openFileDialog1.FileName;
-                openFileDialog1.Dispose();
+                path = openFileDialog2.FileName;
+                openFileDialog2.Dispose();
                 if (path != null)
                 {
                     // форма поиска и выбора устройства
@@ -94,6 +103,29 @@ namespace ToCreate
         private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // путь к выбранному файлу
+            string redeempath = "";
+            // расширение файла даолжно быть code3
+            openFileDialog3.Filter = "(*.code4)|*.code4";
+            if (openFileDialog3.ShowDialog() == DialogResult.OK)
+            {
+                redeempath = openFileDialog3.FileName;
+                openFileDialog3.Dispose();
+                this.Hide();
+                // массив из двух элементов для того, чтобы далее можно было понять 
+                // нужно ли далее создавать возможность декодирования
+                assosiatedfile = new string[2];
+                assosiatedfile[0] = redeempath;
+                assosiatedfile[1] = "";
+                // вызов формы декодирования
+                Form4 Decode = new Form4(assosiatedfile);
+                Decode.ShowDialog();
+                this.Close();
+            }
         }
     }
 }

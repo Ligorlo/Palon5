@@ -5,8 +5,8 @@ using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Security.Principal;
-using System.Diagnostics;
 using System.IO.Compression;
+using System.Security.Cryptography;
 namespace ToCreate
 {
     public partial class Form3 : Form
@@ -31,11 +31,30 @@ namespace ToCreate
 
         }
         // кнопка подтверждения пароля
+        private static byte [] EncryptAES(string tocode, byte[] Key, byte[] IV)
+        {
+            byte[] encrypted;
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Key;
+                aes.IV = IV;
+                ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter sw = new StreamWriter(csEncrypt))
+                        {
+                            sw.Write(tocode);
+                        }
+                        encrypted = ms.ToArray();
+                    }
+                }
+            }
+            return encrypted;
+        }
         private void Ready_Click_1(object sender, EventArgs e)
         {
-            
-            Stopwatch s = new Stopwatch();
-            s.Start();
             // проверка количества символов
             if (textBox1.Text.Length >= 8)
             {
@@ -61,24 +80,23 @@ namespace ToCreate
                                 File.Delete(path);
                                 Random gen = new Random();
                                 // генерация ключа
-                                byte[] key = new byte[gen.Next(50, 100)];
+                                byte[] key = new byte[32];
                                 for (int i = 0; i < key.Length; i++)
                                 {
                                     key[i] = (byte)gen.Next(0, 257);
                                 }
+                                byte[] IV = new byte[16];
+                                for (int i = 0; i < IV.Length; i++)
+                                {
+                                    IV[i] = (byte)gen.Next(0, 255);
+                                }
                                 // переводим ключ в байтовый формат (чтобы можно было хранить более 256 ключей)
                                 byte[] keynumber = Encoding.ASCII.GetBytes(n.ToString());
-                                // Алгоритм кодировки RC4 (просто ксорим с ключом)
-                                int q = 0;
-                                for (int i = 0; i < bytearr2.Length; i++)
-                                {
-                                    if (q == key.Length)
-                                        q = 0;
-                                    bytearr2[i] = (byte)(bytearr2[i] ^ key[q]);
-                                    q++;
-                                }
+                                // Алгоритм кодировки AES 
+                                string Inbaseforencrypt = Convert.ToBase64String(bytearr2);
+                                byte [] tofile = EncryptAES(Inbaseforencrypt, key, IV);
                                 // объединяем номер файла с основной информцией и сериализуем
-                                Connectwithakey connect = new Connectwithakey(bytearr2, keynumber);
+                                Connectwithakey connect = new Connectwithakey(tofile, keynumber);
                                 FileStream str = new FileStream(path, FileMode.OpenOrCreate);
                                 DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(Connectwithakey));
                                 js.WriteObject(str, connect);
@@ -94,7 +112,7 @@ namespace ToCreate
                                 string ID = win.User.ToString();
                                 // ключ ксорится с win 
                                 byte[] onlykey = Encoding.UTF8.GetBytes(ID);
-                                q = 0;
+                               int  q = 0;
                                 for (int i = 0; i < key.Length; i++)
                                 {
                                     if (q == onlykey.Length)
@@ -102,10 +120,10 @@ namespace ToCreate
                                     key[i] = (byte)(key[i] ^ onlykey[q]);
                                 }
                                 // сериализация всех данных безопасности
-                                ToCode serfile = new ToCode(key, Name2, adress, pass, Path.GetExtension(path));
+                                ToCode serfile = new ToCode(key, IV, Name2, adress, pass, Path.GetExtension(path));
                                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ToCode));
-                                MemoryStream ms = new MemoryStream();
-                                serializer.WriteObject(ms, serfile);
+                               // MemoryStream ms = new MemoryStream();
+                               // serializer.WriteObject(ms, serfile);
 
 
                                 string pathforkey = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{n}.txt";
@@ -134,8 +152,7 @@ namespace ToCreate
                                 b = false;
                                 // меняем расширение файла для сериализации
                                 File.Move(path, Path.ChangeExtension(path, ".code3"));
-                                MessageBox.Show(s.Elapsed.ToString());
-                                s.Stop();
+                               
                                 this.Close();
                             }
                         }
@@ -163,24 +180,23 @@ namespace ToCreate
                                 File.Delete(direct);
                                 Random gen = new Random();
                                 // генерация ключа
-                                byte[] key = new byte[gen.Next(50, 100)];
+                                byte[] key = new byte[32];
                                 for (int i = 0; i < key.Length; i++)
                                 {
                                     key[i] = (byte)gen.Next(0, 257);
                                 }
+                                byte[] IV = new byte[16];
+                                for (int i = 0; i < IV.Length; i++)
+                                {
+                                    IV[i] = (byte)gen.Next(0, 255);
+                                }
                                 // переводим ключ в байтовый формат (чтобы можно было хранить более 256 ключей)
                                 byte[] keynumber = Encoding.ASCII.GetBytes(n.ToString());
-                                // Алгоритм кодировки RC4 (просто ксорим с ключом)
-                                int q = 0;
-                                for (int i = 0; i < bytearr2.Length; i++)
-                                {
-                                    if (q == key.Length)
-                                        q = 0;
-                                    bytearr2[i] = (byte)(bytearr2[i] ^ key[q]);
-                                    q++;
-                                }
+                                // Алгоритм кодировки AES 
+                                string Inbaseforencrypt = Convert.ToBase64String(bytearr2);
+                                byte[] tofile = EncryptAES(Inbaseforencrypt, key, IV);
                                 // объединяем номер файла с основной информцией и сериализуем
-                                Connectwithakey connect = new Connectwithakey(bytearr2, keynumber);
+                                Connectwithakey connect = new Connectwithakey(tofile, keynumber);
                                 FileStream str = new FileStream(direct, FileMode.OpenOrCreate);
                                 DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(Connectwithakey));
                                 js.WriteObject(str, connect);
@@ -196,7 +212,7 @@ namespace ToCreate
                                 string ID = win.User.ToString();
                                 // ключ ксорится с win 
                                 byte[] onlykey = Encoding.UTF8.GetBytes(ID);
-                                q = 0;
+                               int q = 0;
                                 for (int i = 0; i < key.Length; i++)
                                 {
                                     if (q == onlykey.Length)
@@ -204,7 +220,7 @@ namespace ToCreate
                                     key[i] = (byte)(key[i] ^ onlykey[q]);
                                 }
                                 // сериализация всех данных безопасности
-                                ToCode serfile = new ToCode(key, Name2, adress, pass, Path.GetExtension(direct));
+                                ToCode serfile = new ToCode(key,IV,  Name2, adress, pass, Path.GetExtension(direct));
                                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ToCode));
                                 MemoryStream ms = new MemoryStream();
                                 serializer.WriteObject(ms, serfile);
@@ -236,8 +252,7 @@ namespace ToCreate
                                 b = false;
                                 // меняем расширение файла для сериализации
                                 File.Move(direct, Path.ChangeExtension(direct, ".code4"));
-                                MessageBox.Show(s.Elapsed.ToString());
-                                s.Stop();
+                                
                                 b = false;
 
                                 this.Close();
@@ -280,7 +295,9 @@ namespace ToCreate
         {
             [DataMember]
             public byte[] file;
-            [DataMember]
+        [DataMember]
+        public byte[] IV;
+        [DataMember]
             public string DeviceName;
             [DataMember]
             public string DeviceAdress;
@@ -288,8 +305,9 @@ namespace ToCreate
             public string Rassh;
             [DataMember]
             public string Password;
-            public ToCode(byte[] file, string DeviceName, string DeviceAdress, string password, string Rassh)
+            public ToCode(byte[] file, byte [] IV, string DeviceName, string DeviceAdress, string password, string Rassh)
             {
+            this.IV = IV;
                 this.file = file;
                 this.DeviceName = DeviceName;
                 this.DeviceAdress = DeviceAdress;

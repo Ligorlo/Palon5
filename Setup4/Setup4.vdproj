@@ -21,8 +21,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_094FE6FEDA7CB71892E6C9DB27745006"
+        "OwnerKey" = "8:_2A9A7DFF50B44467BB654DD9B563D674"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0ED505AD5E9A92DE35804C2970082106"
         "OwnerKey" = "8:_63A063A1A8914E6498EB6115071A3616"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0ED505AD5E9A92DE35804C2970082106"
+        "OwnerKey" = "8:_2A9A7DFF50B44467BB654DD9B563D674"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,6 +45,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1A24F2D9F8E241FB8F362B545E675245"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2625D36865C7D176BFACA83213899E08"
         "OwnerKey" = "8:_63A063A1A8914E6498EB6115071A3616"
         "MsmSig" = "8:_UNDEFINED"
@@ -40,7 +58,19 @@
         "Entry"
         {
         "MsmKey" = "8:_2625D36865C7D176BFACA83213899E08"
+        "OwnerKey" = "8:_2A9A7DFF50B44467BB654DD9B563D674"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2625D36865C7D176BFACA83213899E08"
         "OwnerKey" = "8:_0ED505AD5E9A92DE35804C2970082106"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2A9A7DFF50B44467BB654DD9B563D674"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -51,14 +81,128 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_30A7B421999B803B8328B31793D4EF93"
+        "OwnerKey" = "8:_2A9A7DFF50B44467BB654DD9B563D674"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_319274A22D2EA4A1E1E6E546FF7BA3AB"
+        "OwnerKey" = "8:_63A063A1A8914E6498EB6115071A3616"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_319274A22D2EA4A1E1E6E546FF7BA3AB"
+        "OwnerKey" = "8:_2A9A7DFF50B44467BB654DD9B563D674"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_319274A22D2EA4A1E1E6E546FF7BA3AB"
+        "OwnerKey" = "8:_CD0FB9C9A7A8DEE7EB45DB98CA91F97D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5B4FE62A433B42A599A9749CD8D756C2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_63A063A1A8914E6498EB6115071A3616"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_7660288C54C4470383A63CA43F4DCAF1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7F5C34328ADE4708B2D63301A6575B49"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A4FEA3BCB2C3861306E8598D0E673BA4"
+        "OwnerKey" = "8:_63A063A1A8914E6498EB6115071A3616"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A4FEA3BCB2C3861306E8598D0E673BA4"
+        "OwnerKey" = "8:_2A9A7DFF50B44467BB654DD9B563D674"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BF7940C000DAC084F8A70A27A724A454"
+        "OwnerKey" = "8:_CD0FB9C9A7A8DEE7EB45DB98CA91F97D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BF7940C000DAC084F8A70A27A724A454"
+        "OwnerKey" = "8:_2A9A7DFF50B44467BB654DD9B563D674"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BF7940C000DAC084F8A70A27A724A454"
+        "OwnerKey" = "8:_63A063A1A8914E6498EB6115071A3616"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CD0FB9C9A7A8DEE7EB45DB98CA91F97D"
+        "OwnerKey" = "8:_63A063A1A8914E6498EB6115071A3616"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CD0FB9C9A7A8DEE7EB45DB98CA91F97D"
+        "OwnerKey" = "8:_2A9A7DFF50B44467BB654DD9B563D674"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_0ED505AD5E9A92DE35804C2970082106"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2A9A7DFF50B44467BB654DD9B563D674"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BF7940C000DAC084F8A70A27A724A454"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CD0FB9C9A7A8DEE7EB45DB98CA91F97D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A4FEA3BCB2C3861306E8598D0E673BA4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_319274A22D2EA4A1E1E6E546FF7BA3AB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -116,6 +260,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
         "Release"
@@ -140,6 +292,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
     }
@@ -263,6 +423,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1A24F2D9F8E241FB8F362B545E675245"
+            {
+            "SourcePath" = "8:\\\\Mac\\Home\\Desktop\\Снимок экрана 2018-05-01 в 20.03.03.ico"
+            "TargetName" = "8:Снимок экрана 2018-05-01 в 20.03.03.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_8FCFACBEF7AE4F4081DC0F0EDCF9BAB8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2625D36865C7D176BFACA83213899E08"
             {
             "AssemblyRegister" = "3:1"
@@ -325,6 +505,190 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_319274A22D2EA4A1E1E6E546FF7BA3AB"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_319274A22D2EA4A1E1E6E546FF7BA3AB"
+                    {
+                    "Name" = "8:Microsoft.Practices.ServiceLocation.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.Practices.ServiceLocation.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8FCFACBEF7AE4F4081DC0F0EDCF9BAB8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5B4FE62A433B42A599A9749CD8D756C2"
+            {
+            "SourcePath" = "8:\\\\Mac\\Home\\Desktop\\Снимок экрана 2018-05-01 в 20.18.38.ico"
+            "TargetName" = "8:Снимок экрана 2018-05-01 в 20.18.38.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_8FCFACBEF7AE4F4081DC0F0EDCF9BAB8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7660288C54C4470383A63CA43F4DCAF1"
+            {
+            "SourcePath" = "8:\\\\Mac\\Home\\Desktop\\Иконки.ico"
+            "TargetName" = "8:Иконки.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_8FCFACBEF7AE4F4081DC0F0EDCF9BAB8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7F5C34328ADE4708B2D63301A6575B49"
+            {
+            "SourcePath" = "8:\\\\Mac\\Home\\Desktop\\Снимок экрана 2018-05-01 в 20.03.03.ico"
+            "TargetName" = "8:Снимок экрана 2018-05-01 в 20.03.03.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_8FCFACBEF7AE4F4081DC0F0EDCF9BAB8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A4FEA3BCB2C3861306E8598D0E673BA4"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:GalaSoft.MvvmLight, Version=4.4.32.39728, Culture=neutral, PublicKeyToken=eabbf6a5f5af5004, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A4FEA3BCB2C3861306E8598D0E673BA4"
+                    {
+                    "Name" = "8:GalaSoft.MvvmLight.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:GalaSoft.MvvmLight.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8FCFACBEF7AE4F4081DC0F0EDCF9BAB8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BF7940C000DAC084F8A70A27A724A454"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_BF7940C000DAC084F8A70A27A724A454"
+                    {
+                    "Name" = "8:System.Windows.Interactivity.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.Windows.Interactivity.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8FCFACBEF7AE4F4081DC0F0EDCF9BAB8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CD0FB9C9A7A8DEE7EB45DB98CA91F97D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:GalaSoft.MvvmLight.Extras, Version=4.4.32.39728, Culture=neutral, PublicKeyToken=0e27b6f8be9b2ef7, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_CD0FB9C9A7A8DEE7EB45DB98CA91F97D"
+                    {
+                    "Name" = "8:GalaSoft.MvvmLight.Extras.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:GalaSoft.MvvmLight.Extras.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8FCFACBEF7AE4F4081DC0F0EDCF9BAB8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -334,7 +698,7 @@
             "Description" = "8:"
             "Extensions" = "8:code3"
             "MIME" = "8:"
-            "Icon" = "8:"
+            "Icon" = "8:_7F5C34328ADE4708B2D63301A6575B49"
             "IconIndex" = "3:0"
                 "Command"
                 {
@@ -357,7 +721,7 @@
             "Description" = "8:"
             "Extensions" = "8:code4"
             "MIME" = "8:"
-            "Icon" = "8:"
+            "Icon" = "8:_7660288C54C4470383A63CA43F4DCAF1"
             "IconIndex" = "3:0"
                 "Command"
                 {
@@ -428,7 +792,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Setup4"
         "ProductCode" = "8:{BC671507-3FAE-4D05-A028-C109A0079AE1}"
-        "PackageCode" = "8:{99A3EE1A-B530-4815-9CC0-3D6B6B7421D2}"
+        "PackageCode" = "8:{4697F8EE-3E87-435C-9A80-81C5C7FD38FF}"
         "UpgradeCode" = "8:{EC057A94-7A3B-4121-AA8A-DB7BA443EE22}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -548,18 +912,18 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C76FC28EC7B34301BB584A9CFC0A8B90"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_DA137F90803A4FAA9BE8D7DF7F0181D7"
             {
-            "Name" = "8:ToCode"
+            "Name" = "8:Paloning"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_63A063A1A8914E6498EB6115071A3616"
+            "Target" = "8:_2A9A7DFF50B44467BB654DD9B563D674"
             "Folder" = "8:_5B81C42F49A2464A9D86F87ACB5DA206"
             "WorkingFolder" = "8:_8FCFACBEF7AE4F4081DC0F0EDCF9BAB8"
-            "Icon" = "8:"
+            "Icon" = "8:_5B4FE62A433B42A599A9749CD8D756C2"
             "Feature" = "8:"
             }
         }
@@ -961,6 +1325,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2A9A7DFF50B44467BB654DD9B563D674"
+            {
+            "SourcePath" = "8:\\\\Mac\\Home\\Desktop\\Palon\\ToCreate\\obj\\Debug\\ToCreate.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8FCFACBEF7AE4F4081DC0F0EDCF9BAB8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{E12743A9-99FC-412C-B264-082A2D2C043F}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_63A063A1A8914E6498EB6115071A3616"
             {
             "SourcePath" = "8:\\\\Mac\\Home\\Desktop\\Palon\\ToCreate\\obj\\Debug\\ToCreate.exe"

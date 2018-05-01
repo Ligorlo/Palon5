@@ -1,5 +1,4 @@
-﻿//#if BlueZ
-
+﻿
 using System;
 using System.Windows.Forms;
 using InTheHand.Net.Sockets;
@@ -22,6 +21,7 @@ namespace ToCreate
     /// <summary>
     /// Форма Bluetooth поиска устройства и выбора
     /// </summary>
+    
     public partial class Form2 : Form
     {
         // поле пути к файлу, который надо закодировать
@@ -66,6 +66,7 @@ namespace ToCreate
                             //    File.Delete(pathdev);
                             //}
                             //// переводим адрес и имя в байты и для того чтобы скрыть адрес ксорим имя с адресом
+                            
                             byte[] devname = Encoding.ASCII.GetBytes(device.DeviceName);
                             byte[] devadress = Encoding.ASCII.GetBytes(device.DeviceAddress.ToString());
                             byte [] devad = new byte[devadress.Length];
@@ -98,11 +99,25 @@ namespace ToCreate
                                     FileStream str = new FileStream(pathdev, FileMode.OpenOrCreate);
                                     Devices[] devices = (Devices[])ser.ReadObject(str);
                                     str.Close();
+                                bool b = true;
+                                foreach (Devices item in devices)
+                                {
+                                    
+                                    if (Encoding.ASCII.GetString(item.name) == Encoding.ASCII.GetString(devname) && Encoding.ASCII.GetString(item.adress) == Encoding.ASCII.GetString(devad))
+                                    {
+                                        b = false;
+                                    }
+                                }
+                                if (b)
+                                {
                                     Array.Resize(ref devices, devices.Length + 1);
                                     devices[devices.Length - 1] = dev;
                                     File.Delete(pathdev);
                                     str = new FileStream(pathdev, FileMode.OpenOrCreate);
                                     ser.WriteObject(str, devices);
+                                    str.Close();
+                                }
+                                
                             }
                             else
                             {
@@ -111,6 +126,7 @@ namespace ToCreate
                                 DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Devices[]));
                                 FileStream str = new FileStream(pathdev, FileMode.OpenOrCreate);
                                 ser.WriteObject(str, devices);
+                                str.Close();
                             }
                             Form3 Passwordandshifr = new Form3(path, device.DeviceName, device.DeviceAddress.ToString(), b);
                             Passwordandshifr.ShowDialog();
@@ -129,30 +145,68 @@ namespace ToCreate
             }
 
         }
+        static object locker = new object();
 
-        private void Code_Click(object sender, EventArgs e)
+
+        BluetoothClient bc;
+        System.Windows.Forms.Timer t;
+    private void Code_Click(object sender, EventArgs e)
         {
             // проверка - включен ли Bluetooth
             if (BluetoothRadio.IsSupported)
             {
+                bc = new BluetoothClient();
                 label1.Visible = true;
                 label1.Refresh();
                 label1.Update();
                 Code.Enabled = false;
                 // ищем устройства
-                BluetoothClient bc = new BluetoothClient();
-                info = null;
-                Stopwatch s = new Stopwatch();
-                s.Start();
-                //bc.InquiryLength = new TimeSpan(0, 0, 5);
-               // S l = new S();
-               info = bc.DiscoverDevices(3, true, true, true, true);
                 
-                //info=  bc.EndDiscoverDevices(l);
-                s.Stop();
-                MessageBox.Show(s.Elapsed.ToString());
+                info = null;
+                //bc.InquiryLength = new TimeSpan(0, 0, 5);
+                // S l = new S();
+             // thread = new Thread(S);
+                button2.Enabled = false;
+                Code.Enabled = false;
+                //.Start();
+                bc.BeginDiscoverDevices(10, true, true, true, false,new AsyncCallback(Power), 1);
+                t = new System.Windows.Forms.Timer();
+                t.Interval = 1000;
+                t.Tick += Tick;
+                t.Start();
+
+                 
+                //foreach (BluetoothDeviceInfo device in info)
+                //{
+                //    // проверка повтора устройств в списке
+                //    if (!FoundDevices.Items.Contains(device.DeviceName + " - " + device.DeviceAddress))
+                //    {
+                //        // добавление
+                //        FoundDevices.Items.Add(device.DeviceName + " - " + device.DeviceAddress);
+                //        FoundDevices.Refresh();
+                //        FoundDevices.Update();
+                //    }
+                //}
+                //// меняем название кнопки
+                
+
+
+            }
+            else
+            {
+                MessageBox.Show("Please turn on bluetooth on your computer");
+            }
+        }
+       
+     public void Power(IAsyncResult s)
+        {
+            info = bc.EndDiscoverDevices(s);
             
-                // переносим информацию в список устройств
+        }
+        public void Tick(object sender , EventArgs e)
+        {
+            if (info != null)
+            {
                 foreach (BluetoothDeviceInfo device in info)
                 {
                     // проверка повтора устройств в списке
@@ -164,19 +218,15 @@ namespace ToCreate
                         FoundDevices.Update();
                     }
                 }
-                // меняем название кнопки
+
                 if (Code.Text == "Start")
                     Code.Text = "Restart";
                 Code.Enabled = true;
                 label1.Visible = false;
-            }
-            else
-            {
-                MessageBox.Show("Please turn on bluetooth on your computer");
+                button2.Enabled = true;
+                t.Stop();
             }
         }
-       
-     
         // кнопка выбора из старых
         private void button2_Click(object sender, EventArgs e)
         {
@@ -212,9 +262,14 @@ namespace ToCreate
             this.adress = adress;
         }
     }
+   // public class Event
+   // {
+   //     public event EventHandler Ev;
+   //     public void Startev(object e, EventArgs ev)
+   //     {
+   //         Ev(e, ev);
+   //     }
+   //}
 
-   
 }
    
-
-//#endif
