@@ -30,26 +30,28 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.button2 = new System.Windows.Forms.Button();
+            this.Redeembutton = new System.Windows.Forms.Button();
             this.Capturing = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button1 = new System.Windows.Forms.Button();
+            this.Capture_folder = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.button3 = new System.Windows.Forms.Button();
+            this.RedeemFolder = new System.Windows.Forms.Button();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
+            this.Information = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button2
+            // Redeembutton
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.button2.Location = new System.Drawing.Point(12, 130);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(149, 41);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Redeem";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.Redeembutton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.Redeembutton.Location = new System.Drawing.Point(12, 130);
+            this.Redeembutton.Name = "Redeembutton";
+            this.Redeembutton.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.Redeembutton.Size = new System.Drawing.Size(149, 41);
+            this.Redeembutton.TabIndex = 3;
+            this.Redeembutton.Text = "Redeem File";
+            this.Redeembutton.UseVisualStyleBackColor = false;
+            this.Redeembutton.Click += new System.EventHandler(this.Redeembutton_Click);
             // 
             // Capturing
             // 
@@ -58,7 +60,7 @@
             this.Capturing.Name = "Capturing";
             this.Capturing.Size = new System.Drawing.Size(149, 41);
             this.Capturing.TabIndex = 2;
-            this.Capturing.Text = "Capturing";
+            this.Capturing.Text = "Capture File";
             this.Capturing.UseVisualStyleBackColor = false;
             this.Capturing.Click += new System.EventHandler(this.Capture1_Click);
             // 
@@ -66,31 +68,31 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // button1
+            // Capture_folder
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button1.Location = new System.Drawing.Point(193, 40);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(149, 41);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Capture Folder";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.Capture_folder.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Capture_folder.Location = new System.Drawing.Point(193, 40);
+            this.Capture_folder.Name = "Capture_folder";
+            this.Capture_folder.Size = new System.Drawing.Size(149, 41);
+            this.Capture_folder.TabIndex = 4;
+            this.Capture_folder.Text = "Capture Folder";
+            this.Capture_folder.UseVisualStyleBackColor = false;
+            this.Capture_folder.Click += new System.EventHandler(this.Capture_Folder_Click);
             // 
             // folderBrowserDialog1
             // 
             this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
             // 
-            // button3
+            // RedeemFolder
             // 
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.button3.Location = new System.Drawing.Point(193, 130);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(149, 41);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "Redeem Folder";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.RedeemFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.RedeemFolder.Location = new System.Drawing.Point(193, 130);
+            this.RedeemFolder.Name = "RedeemFolder";
+            this.RedeemFolder.Size = new System.Drawing.Size(149, 41);
+            this.RedeemFolder.TabIndex = 5;
+            this.RedeemFolder.Text = "Redeem Folder";
+            this.RedeemFolder.UseVisualStyleBackColor = false;
+            this.RedeemFolder.Click += new System.EventHandler(this.RedeemFolderbutton_Click);
             // 
             // openFileDialog2
             // 
@@ -100,15 +102,25 @@
             // 
             this.openFileDialog3.FileName = "openFileDialog3";
             // 
+            // Information
+            // 
+            this.Information.Location = new System.Drawing.Point(316, 11);
+            this.Information.Name = "Information";
+            this.Information.Size = new System.Drawing.Size(26, 23);
+            this.Information.TabIndex = 6;
+            this.Information.UseVisualStyleBackColor = true;
+            this.Information.Click += new System.EventHandler(this.Information_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(354, 226);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.Information);
+            this.Controls.Add(this.RedeemFolder);
+            this.Controls.Add(this.Capture_folder);
+            this.Controls.Add(this.Redeembutton);
             this.Controls.Add(this.Capturing);
             this.MaximumSize = new System.Drawing.Size(370, 265);
             this.MinimumSize = new System.Drawing.Size(300, 265);
@@ -121,14 +133,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button Redeembutton;
         private System.Windows.Forms.Button Capturing;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Capture_folder;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button RedeemFolder;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private System.Windows.Forms.OpenFileDialog openFileDialog3;
+        private System.Windows.Forms.Button Information;
     }
 }
 
