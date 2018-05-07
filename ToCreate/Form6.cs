@@ -3,9 +3,12 @@ using System.Windows.Forms;
 
 namespace ToCreate
 {
-    // форма ввода пароля
+    /// <summary>
+    /// Form6 - форма проверки пароля, если устройства нет поблизости 
+    /// </summary>
     public partial class Form6 : Form
     {
+        // поле хранящее информацию ключа
         ToCode forpas;
         // проверка правильности пароля
         bool pasbool = false;
@@ -19,16 +22,19 @@ namespace ToCreate
             forpas = cod;
             InitializeComponent();
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        // кнопка проверки пароля
+        private void Ready_Click(object sender, EventArgs e)
         {
+            // проверка пароля
             if(textBox1.Text != ""&& forpas.Password == textBox1.Text)
             {
+                // верный пароль 
                 pasbool = true;
                 this.Close();
             }
             else
             {
+                // неверный пароль
                 label1.Text = "Incorrect password";
             }
         }

@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.Encryptback = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // Encryptback
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(171, 55);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Shifr back";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.Encryptback.Location = new System.Drawing.Point(12, 12);
+            this.Encryptback.Name = "Encryptback";
+            this.Encryptback.Size = new System.Drawing.Size(171, 55);
+            this.Encryptback.TabIndex = 0;
+            this.Encryptback.Text = "Encrypt again";
+            this.Encryptback.UseVisualStyleBackColor = true;
+            this.Encryptback.Click += new System.EventHandler(this.Encryptback_Click);
             // 
             // Form5
             // 
@@ -47,7 +47,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.ClientSize = new System.Drawing.Size(198, 81);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.Encryptback);
             this.MaximumSize = new System.Drawing.Size(214, 120);
             this.MinimumSize = new System.Drawing.Size(214, 120);
             this.Name = "Form5";
@@ -58,6 +58,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Encryptback;
     }
 }

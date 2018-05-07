@@ -32,25 +32,26 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.Ready = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(28, 49);
+            this.textBox1.Location = new System.Drawing.Point(28, 52);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 0;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(28, 91);
+            this.textBox2.Location = new System.Drawing.Point(28, 89);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 1;
             // 
             // Ready
             // 
-            this.Ready.Location = new System.Drawing.Point(28, 137);
+            this.Ready.Location = new System.Drawing.Point(28, 131);
             this.Ready.Name = "Ready";
             this.Ready.Size = new System.Drawing.Size(81, 23);
             this.Ready.TabIndex = 2;
@@ -61,11 +62,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 18);
+            this.label1.Location = new System.Drawing.Point(25, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(132, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Write down your password";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(176, 152);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(108, 26);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Password must have \r\nat least 8 symbols";
             // 
             // Form3
             // 
@@ -73,6 +83,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.ClientSize = new System.Drawing.Size(320, 222);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Ready);
             this.Controls.Add(this.textBox2);
@@ -92,5 +103,6 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button Ready;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }

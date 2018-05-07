@@ -104,9 +104,11 @@
             // 
             // Information
             // 
-            this.Information.Location = new System.Drawing.Point(316, 11);
+            this.Information.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Information.BackgroundImage")));
+            this.Information.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.Information.Location = new System.Drawing.Point(313, 6);
             this.Information.Name = "Information";
-            this.Information.Size = new System.Drawing.Size(26, 23);
+            this.Information.Size = new System.Drawing.Size(29, 28);
             this.Information.TabIndex = 6;
             this.Information.UseVisualStyleBackColor = true;
             this.Information.Click += new System.EventHandler(this.Information_Click);

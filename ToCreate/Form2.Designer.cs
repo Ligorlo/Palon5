@@ -32,6 +32,7 @@
             this.Indexer = new System.Windows.Forms.Label();
             this.Searchdevice = new System.Windows.Forms.Button();
             this.Choosefromused = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // FoundDevices
@@ -74,12 +75,22 @@
             this.Choosefromused.UseVisualStyleBackColor = true;
             this.Choosefromused.Click += new System.EventHandler(this.Already_used_Click);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(24, 266);
+            this.progressBar1.Maximum = 13;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.TabIndex = 4;
+            this.progressBar1.Visible = false;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.ClientSize = new System.Drawing.Size(526, 335);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.Choosefromused);
             this.Controls.Add(this.Searchdevice);
             this.Controls.Add(this.Indexer);
@@ -97,5 +108,6 @@
         public System.Windows.Forms.Label Indexer;
         private System.Windows.Forms.Button Searchdevice;
         private System.Windows.Forms.Button Choosefromused;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }

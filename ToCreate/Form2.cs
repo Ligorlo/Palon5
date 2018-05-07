@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Windows.Forms;
 using InTheHand.Net.Sockets;
 using InTheHand.Net.Bluetooth;
@@ -7,7 +6,6 @@ using System.IO;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-using System.Diagnostics;
 namespace ToCreate
 {
     /// <summary>
@@ -29,6 +27,7 @@ namespace ToCreate
         }
         private void Form2_Load(object sender, EventArgs e)
         {
+
         }
         // массив инфорации о найденных девайсах
         BluetoothDeviceInfo[] info;
@@ -59,14 +58,15 @@ namespace ToCreate
                             }
                             else
                             {
-
-                                pathdev = $"../Devices.txt";
+                                if (!Directory.Exists($"../Palon"))
+                                    Directory.CreateDirectory($"../Palon");
+                                pathdev = $"../Palon/Devices.txt";
                             }
                             // имена устройств
                             byte[] devname = Encoding.ASCII.GetBytes(device.DeviceName);
                             // адреса устройств
                             byte[] devadress = Encoding.ASCII.GetBytes(device.DeviceAddress.ToString());
-                            // прячем адрес ксоря с именем
+                            // прячем адрес ксорим с именем
                             byte [] devad = new byte[devadress.Length];
                             int q = 0;
                             for (int i = 0; i < devadress.Length; i++)
@@ -98,6 +98,7 @@ namespace ToCreate
                                 // добавляем наше устройство 
                                 if (b)
                                 {
+                                    // добавляем в массив
                                     Array.Resize(ref devices, devices.Length + 1);
                                     devices[devices.Length - 1] = dev;
                                     File.Delete(pathdev);
@@ -145,6 +146,7 @@ namespace ToCreate
             // проверка - включен ли Bluetooth
             if (BluetoothRadio.IsSupported)
             {
+                progressBar1.Visible = true ;
                 blclient = new BluetoothClient();
                 // индексатор поиска
                 Indexer.Visible = true;
@@ -176,6 +178,8 @@ namespace ToCreate
         // метод проверки есть ли ещё устройства поблизости и запись их в FoundDevice
         public void Tick(object sender , EventArgs e)
         {
+
+            progressBar1.Increment(1);
             if (info != null)
             {
                 foreach (BluetoothDeviceInfo device in info)
@@ -199,13 +203,15 @@ namespace ToCreate
                 Choosefromused.Enabled = true;
                 // выключаем таймер
                 timer.Stop();
+                progressBar1.Visible = false;
+                progressBar1.Value = 0;
             }
         }
         // кнопка выбора из старых
         private void Already_used_Click(object sender, EventArgs e)
         {
             // проверка были ли устройства до 
-            if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Devices.txt")|| File.Exists($"../Devices.txt"))
+            if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Devices.txt")|| File.Exists($"../Palon/Devices.txt"))
             {
                 // вызов формы выбора одного из сохраненных устройств
                 Form7 saved = new Form7(path, b);
@@ -220,15 +226,18 @@ namespace ToCreate
             {
                 MessageBox.Show("Sorry, but there are no saved phones");
             }
-
-
         }
     }
+    /// <summary>
+    /// Класс для сериализации информации об устройствах
+    /// </summary>
     [DataContract]
     public class Devices
     {
+        // имя
         [DataMember]
         public byte[] name;
+        // адрес
         [DataMember]
         public byte[] adress;
         public Devices (byte [] name, byte [] adress )

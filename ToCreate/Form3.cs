@@ -9,6 +9,9 @@ using System.IO.Compression;
 using System.Security.Cryptography;
 namespace ToCreate
 {
+    /// <summary>
+    /// Form3 - класс форма ввода парол и кодирования
+    /// </summary>
     public partial class Form3 : Form
     {
         // путь к файлу
@@ -18,6 +21,7 @@ namespace ToCreate
         // адрес устройства
         string adress;
         bool bo;
+        // присвоение свойствам значений
         public Form3(string path, string ID, string adress, bool bo)
         {
             InitializeComponent();
@@ -30,14 +34,19 @@ namespace ToCreate
         {
 
         }
-        // кнопка подтверждения пароля
+        // кодирование файла алгоритмом AES
         private static byte [] EncryptAES(string tocode, byte[] Key, byte[] IV)
         {
+            // возвращаемые байты
             byte[] encrypted;
+            // aes encryptor
             using (Aes aes = Aes.Create())
             {
+                //ключ
                 aes.Key = Key;
+                // IV
                 aes.IV = IV;
+                // создаём encryptor
                 ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
                 using (MemoryStream ms = new MemoryStream())
                 {
@@ -45,39 +54,55 @@ namespace ToCreate
                     {
                         using (StreamWriter sw = new StreamWriter(csEncrypt))
                         {
+                            // записываем
                             sw.Write(tocode);
                         }
                         encrypted = ms.ToArray();
                     }
                 }
             }
+            // возвращаем массив байтов (зашифрованных)
             return encrypted;
         }
+        // кнопка готовности ввода
         private void Ready_Click_1(object sender, EventArgs e)
         {
             // проверка количества символов
             if (textBox1.Text.Length >= 8)
             {
+                // проверка совпадения паролей
                 if (textBox1.Text == textBox2.Text)
                 {
+                    // провекра файл или папка
                     if (bo == true)
                     {
+                        string pathtodirectory = "";
                         // папка для ключей
-                        string pathtodirectory = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon";
+                        if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming"))
+                        {
+                            pathtodirectory = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon";
+                        }
+                        else
+                        {
+                            pathtodirectory = $"../Palon";
+                        }
+                        // переменная для остановки подбора
                         bool b = true;
                         // подбор свободного номера для файла
                         int n = -1;
                         while (b)
                         {
                             n++;
-                            if (!File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{n}.txt"))
+                            if (!File.Exists($"{pathtodirectory}/Pakman{n}.txt"))
                             {
                                 //создаём папку для ключей
                                 Directory.CreateDirectory(pathtodirectory);
                                 // файл ключа
-                                File.Create($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{n}.txt").Close();
+                                File.Create($"{pathtodirectory}/Pakman{n}.txt").Close();
+                                // содержимое начального файла
                                 byte[] bytearr2 = File.ReadAllBytes(path);
                                 File.Delete(path);
+                                // генератор рандома
                                 Random gen = new Random();
                                 // генерация ключа
                                 byte[] key = new byte[32];
@@ -85,26 +110,27 @@ namespace ToCreate
                                 {
                                     key[i] = (byte)gen.Next(0, 257);
                                 }
+                                // генерация IV
                                 byte[] IV = new byte[16];
                                 for (int i = 0; i < IV.Length; i++)
                                 {
                                     IV[i] = (byte)gen.Next(0, 255);
                                 }
-                                // переводим ключ в байтовый формат (чтобы можно было хранить более 256 ключей)
+                                // переводим ключ в байтовый формат (чтобы можно было сериализовать и хранить более 256 ключей)
                                 byte[] keynumber = Encoding.ASCII.GetBytes(n.ToString());
                                 // Алгоритм кодировки AES 
+                                // переводим в base64 
                                 string Inbaseforencrypt = Convert.ToBase64String(bytearr2);
+                                // закодрованный массив байтов
                                 byte [] tofile = EncryptAES(Inbaseforencrypt, key, IV);
                                 // объединяем номер файла с основной информцией и сериализуем
                                 Connectwithakey connect = new Connectwithakey(tofile, keynumber);
+                                // записываем в старый путь 
                                 FileStream str = new FileStream(path, FileMode.OpenOrCreate);
                                 DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(Connectwithakey));
                                 js.WriteObject(str, connect);
                                 str.Close();
-                                // можно ещё раз здесь XOR
-                                // end with main file
-                                // start with key file
-                                // пароль 
+                                // берём пароль
                                 string pass = textBox1.Text;
                                 // для кодирования берется айди безопасности учетно записи, чтобы нельзя было открыть с другого компа
                                 IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
@@ -122,24 +148,15 @@ namespace ToCreate
                                 // сериализация всех данных безопасности
                                 ToCode serfile = new ToCode(key, IV, Name2, adress, pass, Path.GetExtension(path));
                                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ToCode));
-                               // MemoryStream ms = new MemoryStream();
-                               // serializer.WriteObject(ms, serfile);
-
-
-                                string pathforkey = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{n}.txt";
+                                // путь к ключу
+                                string pathforkey = $"{pathtodirectory}/Pakman{n}.txt";
                                 FileStream fileStream = new FileStream(pathforkey, FileMode.Open);
+                                // сериализуем и записываем ключ
                                 serializer.WriteObject(fileStream, serfile);
                                 fileStream.Close();
-                                byte[] serkey = File.ReadAllBytes(pathforkey); //new byte[ms.Length];
-                                                                               // ms.Read(serkey, 0, (int)ms.Length);
-                                                                               //new byte[ms.Capacity];
-                                                                               //int count = 0;
-                                                                               //while (ms.CanRead)
-                                                                               //{
-                                                                               //    serkey[count] = (byte)ms.ReadByte();
-                                                                               //    count++;
-                                                                               //}
-                                                                               // ещё раз ксорим с win но уже в другой кодировке
+                                // вновь читаем чтобы всё вместе закодировать
+                                byte[] serkey = File.ReadAllBytes(pathforkey); 
+                                // ксорим всё вместе с ID в кодировке ASCII
                                 byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
                                 q = 0;
                                 for (int i = 0; i < serkey.Length; i++)
@@ -148,36 +165,84 @@ namespace ToCreate
                                         q = 0;
                                     serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
                                 }
+                                // записываем обратно  файл
                                 File.WriteAllBytes(pathforkey, serkey);
+                                // останавливаем подбор файло для ключа
                                 b = false;
                                 // меняем расширение файла для сериализации
-                                File.Move(path, Path.ChangeExtension(path, ".code3"));
-                               
+                                bool filename = true;
+                                int number = 2;
+                                string pathcheck = path;
+                                // подбираем файл таким образом чтобы не было повтора
+                                pathcheck = Path.ChangeExtension(pathcheck, ".code3");
+                                if (File.Exists(pathcheck))
+                                {
+                                   while (filename)
+                                    {
+                                        pathcheck = Path.ChangeExtension(pathcheck, "");
+                                        pathcheck = pathcheck.Remove(pathcheck.Length - 1);
+                                        pathcheck = $"{pathcheck}{number}";
+                                        pathcheck = Path.ChangeExtension(pathcheck, ".code3");
+                                        if (!File.Exists (pathcheck))
+                                        {
+                                            filename = false;
+                                        }
+                                    }
+                                }
+                                File.Move(path, pathcheck);
                                 this.Close();
                             }
                         }
                     }
                     else
                     {
-                        string pathtodirectory = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon";
+                        string pathtodirectory = "";
+                        // папка для ключей
+                        if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming"))
+                        {
+                            pathtodirectory = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon";
+                        }
+                        else
+                        {
+                            pathtodirectory = $"../Palon";
+                        }
+                        // переменная для подбора свободного ключа
                         bool b = true;
                         // подбор свободного номера для файла
                         int n = -1;
                         while (b)
                         {
                             n++;
-                            if (!File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{n}.txt"))
+                            // проверка существования ключа
+                            if (!File.Exists($"{pathtodirectory}/PakmanD{n}.txt"))
                             {
-                                string direct =  Path.ChangeExtension(path, "txt");
-                                if (!File.Exists(Path.ChangeExtension(path, "txt")))
-                                    ZipFile.CreateFromDirectory(path, Path.ChangeExtension(path, "txt"));
-                                Directory.Delete(path, true);
+                                // меняем путь
+                                string direct = Path.ChangeExtension(path, "txt");
+                                int num = 2;
+                                bool exist = true;
+                                while (exist)
+                                {
+                                    if (!File.Exists(direct))
+                                    {
+                                        ZipFile.CreateFromDirectory(path, direct);
+                                        exist = false;
+                                    }
+                                    else
+                                    {
+                                        direct = Path.ChangeExtension(path, $"txt{num}");
+                                        num++;
+                                    }
+                                }
+                                        Directory.Delete(path, true);
                                 //создаём папку для ключей
                                 Directory.CreateDirectory(pathtodirectory);
                                 // файл ключа
-                                File.Create($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{n}.txt").Close();
+                                File.Create($"{pathtodirectory}/PakmanD{n}.txt").Close();
+                                // читаем данные архивированной папки
                                 byte[] bytearr2 = File.ReadAllBytes(direct);
+                                // удаляем архивированную папку
                                 File.Delete(direct);
+                                // генератор рандома
                                 Random gen = new Random();
                                 // генерация ключа
                                 byte[] key = new byte[32];
@@ -185,6 +250,7 @@ namespace ToCreate
                                 {
                                     key[i] = (byte)gen.Next(0, 257);
                                 }
+                                // генераия IV
                                 byte[] IV = new byte[16];
                                 for (int i = 0; i < IV.Length; i++)
                                 {
@@ -193,17 +259,17 @@ namespace ToCreate
                                 // переводим ключ в байтовый формат (чтобы можно было хранить более 256 ключей)
                                 byte[] keynumber = Encoding.ASCII.GetBytes(n.ToString());
                                 // Алгоритм кодировки AES 
+                                // переводим в base64
                                 string Inbaseforencrypt = Convert.ToBase64String(bytearr2);
+                                // энкриптим
                                 byte[] tofile = EncryptAES(Inbaseforencrypt, key, IV);
                                 // объединяем номер файла с основной информцией и сериализуем
                                 Connectwithakey connect = new Connectwithakey(tofile, keynumber);
+                                // записывем получившееся в новый файл
                                 FileStream str = new FileStream(direct, FileMode.OpenOrCreate);
                                 DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(Connectwithakey));
                                 js.WriteObject(str, connect);
                                 str.Close();
-                                // можно ещё раз здесь XOR
-                                // end with main file
-                                // start with key file
                                 // пароль 
                                 string pass = textBox1.Text;
                                 // для кодирования берется айди безопасности учетно записи, чтобы нельзя было открыть с другого компа
@@ -222,39 +288,49 @@ namespace ToCreate
                                 // сериализация всех данных безопасности
                                 ToCode serfile = new ToCode(key,IV,  Name2, adress, pass, Path.GetExtension(direct));
                                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ToCode));
-                                MemoryStream ms = new MemoryStream();
-                                serializer.WriteObject(ms, serfile);
-
-
-                                string pathforkey = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{n}.txt";
+                                string pathforkey = $"{pathtodirectory}/PakmanD{n}.txt";
                                 FileStream fileStream = new FileStream(pathforkey, FileMode.Open);
+                                // записывем в фвйл
                                 serializer.WriteObject(fileStream, serfile);
                                 fileStream.Close();
-                                byte[] serkey = File.ReadAllBytes(pathforkey); //new byte[ms.Length];
-                                                                               // ms.Read(serkey, 0, (int)ms.Length);
-                                                                               //new byte[ms.Capacity];
-                                                                               //int count = 0;
-                                                                               //while (ms.CanRead)
-                                                                               //{
-                                                                               //    serkey[count] = (byte)ms.ReadByte();
-                                                                               //    count++;
-                                                                               //}
-                                                                               // ещё раз ксорим с win но уже в другой кодировке
+                                // вновь читаем для того чтобы всё ксорить с ID в кодировке ASCII
+                                byte[] serkey = File.ReadAllBytes(pathforkey); 
                                 byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
                                 q = 0;
+                                // ксорим
                                 for (int i = 0; i < serkey.Length; i++)
                                 {
                                     if (q == tocodekey.Length)
                                         q = 0;
                                     serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
                                 }
+                                // записываем
                                 File.WriteAllBytes(pathforkey, serkey);
+                                // избегаем повтора
                                 b = false;
                                 // меняем расширение файла для сериализации
-                                File.Move(direct, Path.ChangeExtension(direct, ".code4"));
-                                
-                                b = false;
-
+                                // проверяем чтобы не было исключений
+                                bool filename = true;
+                                int number = 2;
+                                string pathcheck = direct;
+                                // подбираем файл таким образом чтобы не было повтора
+                                pathcheck = Path.ChangeExtension(pathcheck, ".code4");
+                                if (File.Exists(pathcheck))
+                                {
+                                    while (filename)
+                                    {
+                                        pathcheck = Path.ChangeExtension(pathcheck, "");
+                                        pathcheck = pathcheck.Remove(pathcheck.Length - 1);
+                                        pathcheck = $"{pathcheck}{number}";
+                                        pathcheck = Path.ChangeExtension(pathcheck, ".code4");
+                                        if (!File.Exists(pathcheck))
+                                        {
+                                            filename = false;
+                                        }
+                                    }
+                                }
+                                // переводим файл в новое расширение
+                                File.Move(direct, pathcheck);
                                 this.Close();
                             }
                         }
@@ -277,9 +353,11 @@ namespace ToCreate
     [DataContract]
     public class Connectwithakey
     {
+        // данные файла
         [DataMember]
         public byte[] file;
         [DataMember]
+        // номер ключа
         public byte[] keynumber;
         public Connectwithakey(byte[]file, byte [] keynumber)
         {
@@ -293,18 +371,25 @@ namespace ToCreate
     [DataContract]
         public class ToCode
         {
+        // ключ
             [DataMember]
-            public byte[] file;
+            public byte [] file;
         [DataMember]
+        // IV
         public byte[] IV;
         [DataMember]
+        // имя устройства
             public string DeviceName;
             [DataMember]
+            // адрес устройства
             public string DeviceAdress;
             [DataMember]
+            // расширение файла
             public string Rassh;
             [DataMember]
+            // пароль
             public string Password;
+        // присвоение значений полям
             public ToCode(byte[] file, byte [] IV, string DeviceName, string DeviceAdress, string password, string Rassh)
             {
             this.IV = IV;

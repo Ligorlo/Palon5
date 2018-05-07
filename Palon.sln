@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToCreate", "ToCreate\ToCreate.csproj", "{E12743A9-99FC-412C-B264-082A2D2C043F}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup4", "Setup4\Setup4.vdproj", "{423F68B4-50C4-480E-A179-8DA0008E9914}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Palonsetup", "Palonsetup\Palonsetup.vdproj", "{B2FA9D3C-666D-4F1B-B793-4A082670B5A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +17,8 @@ Global
 		{E12743A9-99FC-412C-B264-082A2D2C043F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E12743A9-99FC-412C-B264-082A2D2C043F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E12743A9-99FC-412C-B264-082A2D2C043F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{423F68B4-50C4-480E-A179-8DA0008E9914}.Debug|Any CPU.ActiveCfg = Debug
-		{423F68B4-50C4-480E-A179-8DA0008E9914}.Release|Any CPU.ActiveCfg = Release
+		{B2FA9D3C-666D-4F1B-B793-4A082670B5A2}.Debug|Any CPU.ActiveCfg = Debug
+		{B2FA9D3C-666D-4F1B-B793-4A082670B5A2}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

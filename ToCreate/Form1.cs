@@ -7,12 +7,12 @@ namespace ToCreate
     /// </summary>
     public partial class Form1 : Form
     {
-        // массив пути к файл, если программа была открыта не на прямую
+        // массив пути к файлу, если программа была открыта не на прямую
         string[] assosiatedfile;
         public Form1(string[] args)
         {
             this.assosiatedfile = args;
-            //args = new string[1];args[0] = @"\\Mac\Home\Desktop\P.code4";
+            //args = new string[1];args[0] = @"\\Mac\Home\Desktop\P222.code4";
             // args - возможный путь
             //( который появляется при открытии файла code3, и включается раскодирование)
             // если же это пустой массив, то открывается сама программа кодирования
@@ -48,6 +48,7 @@ namespace ToCreate
             openFileDialog1.Filter = "(*.code3)|*.code3";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                // путь к файлу, с которым будем работать 
                 redeempath = openFileDialog1.FileName;
                 openFileDialog1.Dispose();
                 this.Hide();
@@ -101,6 +102,7 @@ namespace ToCreate
         }
         private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
         {
+
         }
         // кнопка декодирования папки
         private void RedeemFolderbutton_Click(object sender, EventArgs e)
@@ -128,7 +130,8 @@ namespace ToCreate
         // кнопка справок
         private void Information_Click(object sender, EventArgs e)
         {
-
+            Back information = new Back();
+            information.ShowDialog();
         }
     }
 }
