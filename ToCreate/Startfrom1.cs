@@ -1,18 +1,67 @@
 ﻿using System;
 using System.Windows.Forms;
+using MetroFramework.Forms;
+using MetroFramework.Components;
+using System.IO;
+using System.Diagnostics;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 namespace ToCreate
 {
     /// <summary>
     /// Начальный класс форм1, где пользоватеь выбирает, что делать с файлом
     /// </summary>
-    public partial class Form1 : Form
+    public partial class Startfrom1 : MetroFramework.Forms.MetroForm
     {
         // массив пути к файлу, если программа была открыта не на прямую
-        string[] assosiatedfile;
-        public Form1(string[] args)
+       string[] assosiatedfile;
+        public Startfrom1(string[] args)
         {
+            // проверка есть ли журнал
+           if(File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt"))
+            {
+                try
+                {
+                    FileStream str = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt", FileMode.Open);
+                    DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Together));
+                    Together a = (Together)json.ReadObject(str);
+                    // массив запущенных процессов
+                    Process[] pr = Process.GetProcesses();
+                    str.Close();
+                    // проверка числа запущенных программ PALON
+                    int myprogramm = 0;
+                    foreach (var item in pr)
+                    {
+                        if (item.ProcessName == "ToCreate")
+                        {
+                            myprogramm++;
+                        }
+                    }
+                    // проверка числа запущенных программ PALON
+                    if (myprogramm <= a.mas.Length)
+                    {
+                        for (int i = 0; i < a.mas.Length; i++)
+                        {
+                            // проверка существует ли нужный нам файл
+                            if (File.Exists(a.mas[i].path))
+                            {
+                                // кодируем файл
+                                Passwordandencrypt3 extra = new Passwordandencrypt3(a.mas[i].path, "", a.mas[i].adr, a.mas[i].direct);
+                            }
+                        }
+                        // удаляем
+                        File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt");
+                    }
+                }
+                // исключение при десериализации
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Source File was changed");
+                    this.Close();
+                }
+            }
             this.assosiatedfile = args;
-            //args = new string[1];args[0] = @"\\Mac\Home\Desktop\P222.code4";
+            args = new string[1];args[0] = @"\\Mac\Home\Desktop\Снимок экрана 2018-05-20 в 20.42.14.code3";
             // args - возможный путь
             //( который появляется при открытии файла code3, и включается раскодирование)
             // если же это пустой массив, то открывается сама программа кодирования
@@ -28,7 +77,7 @@ namespace ToCreate
                 // поиск устройства и декодирование 
                 this.Hide();
                 // форма  поиска устройства и декодирования
-                Form4 Decode = new Form4(args);
+                CheckAndDecrypt Decode = new CheckAndDecrypt(args);
                 Decode.ShowDialog();
                 //this.Close();
                 this.Shown += new EventHandler(MyForm_CloseOnStart);
@@ -58,7 +107,7 @@ namespace ToCreate
                 assosiatedfile[0] = redeempath;
                 assosiatedfile[1] = "";
                 // вызов формы декодирования
-                Form4 Decode = new Form4(assosiatedfile);
+                CheckAndDecrypt Decode = new CheckAndDecrypt(assosiatedfile);
                 Decode.ShowDialog();
                 this.Close();
             }
@@ -75,7 +124,7 @@ namespace ToCreate
                 if (path != null)
                 {
                     // форма поиска и выбора устройства
-                    Form2 getbluetoothpas = new Form2(path, true);
+                    DiscoverBLEDevices2 getbluetoothpas = new DiscoverBLEDevices2(path, true);
                     getbluetoothpas.ShowDialog();
                     //this.Close();
                 }
@@ -96,13 +145,9 @@ namespace ToCreate
             {
                 string path = folderBrowserDialog1.SelectedPath;
                 // поиск устройства
-                Form2 Finddevice = new Form2(path, false);
+                DiscoverBLEDevices2 Finddevice = new DiscoverBLEDevices2(path, false);
                 Finddevice.ShowDialog();
             }
-        }
-        private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
-        {
-
         }
         // кнопка декодирования папки
         private void RedeemFolderbutton_Click(object sender, EventArgs e)
@@ -122,7 +167,7 @@ namespace ToCreate
                 assosiatedfile[0] = redeempath;
                 assosiatedfile[1] = "";
                 // вызов формы декодирования
-                Form4 Decode = new Form4(assosiatedfile);
+                CheckAndDecrypt Decode = new CheckAndDecrypt(assosiatedfile);
                 Decode.ShowDialog();
                 this.Close();
             }
@@ -130,7 +175,7 @@ namespace ToCreate
         // кнопка справок
         private void Information_Click(object sender, EventArgs e)
         {
-            Back information = new Back();
+            Information information = new Information();
             information.ShowDialog();
         }
     }

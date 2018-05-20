@@ -6,7 +6,10 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 namespace ToCreate
 {
-    public partial class Form7 : Form
+    /// <summary>
+    /// Форма уже использовааных устройств для быстрого выбора
+    /// </summary>
+    public partial class UsedDevices :  MetroFramework.Forms.MetroForm
     {
         // переменная для понимания причины возвращения, если false значит возврат сделан для повторного поиска
         bool boo = true;
@@ -23,7 +26,7 @@ namespace ToCreate
         string[,] toconsole;
         // папка или файл
         bool boool;
-        public Form7(string path, bool boool)
+        public UsedDevices(string path, bool boool)
         {
 
             this.boool = boool;
@@ -98,7 +101,7 @@ namespace ToCreate
                         }
                         toconsole[i, 1] = Encoding.ASCII.GetString(devadress);
                         // форма ввода пароля и кодирования
-                        Form3 pass = new Form3(path, toconsole[i, 0], toconsole[i, 1], boool );
+                        Passwordandencrypt3 pass = new Passwordandencrypt3(path, toconsole[i, 0], toconsole[i, 1], boool );
                         pass.ShowDialog();
                         this.Close();
                         break;

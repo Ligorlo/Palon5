@@ -1,6 +1,6 @@
 ﻿namespace ToCreate
 {
-    partial class Back
+    partial class Information
     {
         /// <summary>
         /// Required designer variable.

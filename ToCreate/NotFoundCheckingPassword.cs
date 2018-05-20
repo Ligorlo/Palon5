@@ -6,7 +6,7 @@ namespace ToCreate
     /// <summary>
     /// Form6 - форма проверки пароля, если устройства нет поблизости 
     /// </summary>
-    public partial class Form6 : Form
+    public partial class NotFoundCheckingPassword :  MetroFramework.Forms.MetroForm
     {
         // поле хранящее информацию ключа
         ToCode forpas;
@@ -17,7 +17,7 @@ namespace ToCreate
         {
             get { return pasbool; }
         }
-        public Form6(ToCode cod)
+        public NotFoundCheckingPassword(ToCode cod)
         {
             forpas = cod;
             InitializeComponent();

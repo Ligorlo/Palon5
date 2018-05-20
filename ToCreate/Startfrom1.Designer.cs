@@ -1,6 +1,6 @@
 ﻿namespace ToCreate
 {
-    partial class Form1
+    partial class Startfrom1
     { 
        
         /// <summary>
@@ -29,16 +29,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Startfrom1));
             this.Redeembutton = new System.Windows.Forms.Button();
             this.Capturing = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.Capture_folder = new System.Windows.Forms.Button();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.RedeemFolder = new System.Windows.Forms.Button();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
             this.Information = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.SuspendLayout();
             // 
             // Redeembutton
@@ -56,7 +56,7 @@
             // Capturing
             // 
             this.Capturing.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Capturing.Location = new System.Drawing.Point(12, 40);
+            this.Capturing.Location = new System.Drawing.Point(12, 63);
             this.Capturing.Name = "Capturing";
             this.Capturing.Size = new System.Drawing.Size(149, 41);
             this.Capturing.TabIndex = 2;
@@ -71,17 +71,13 @@
             // Capture_folder
             // 
             this.Capture_folder.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Capture_folder.Location = new System.Drawing.Point(193, 40);
+            this.Capture_folder.Location = new System.Drawing.Point(193, 63);
             this.Capture_folder.Name = "Capture_folder";
             this.Capture_folder.Size = new System.Drawing.Size(149, 41);
             this.Capture_folder.TabIndex = 4;
             this.Capture_folder.Text = "Capture Folder";
             this.Capture_folder.UseVisualStyleBackColor = false;
             this.Capture_folder.Click += new System.EventHandler(this.Capture_Folder_Click);
-            // 
-            // folderBrowserDialog1
-            // 
-            this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
             // 
             // RedeemFolder
             // 
@@ -106,9 +102,9 @@
             // 
             this.Information.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Information.BackgroundImage")));
             this.Information.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.Information.Location = new System.Drawing.Point(313, 6);
+            this.Information.Location = new System.Drawing.Point(290, 204);
             this.Information.Name = "Information";
-            this.Information.Size = new System.Drawing.Size(29, 28);
+            this.Information.Size = new System.Drawing.Size(27, 26);
             this.Information.TabIndex = 6;
             this.Information.UseVisualStyleBackColor = true;
             this.Information.Click += new System.EventHandler(this.Information_Click);
@@ -117,8 +113,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(354, 226);
+            this.ClientSize = new System.Drawing.Size(354, 265);
             this.Controls.Add(this.Information);
             this.Controls.Add(this.RedeemFolder);
             this.Controls.Add(this.Capture_folder);
@@ -139,11 +134,11 @@
         private System.Windows.Forms.Button Capturing;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button Capture_folder;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button RedeemFolder;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private System.Windows.Forms.OpenFileDialog openFileDialog3;
         private System.Windows.Forms.Button Information;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }
 

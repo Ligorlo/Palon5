@@ -1,6 +1,6 @@
 ﻿namespace ToCreate
 {
-    partial class Form5
+    partial class EncryptBack5
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,7 @@
             // 
             // Encryptback
             // 
-            this.Encryptback.Location = new System.Drawing.Point(12, 12);
+            this.Encryptback.Location = new System.Drawing.Point(20, 54);
             this.Encryptback.Name = "Encryptback";
             this.Encryptback.Size = new System.Drawing.Size(171, 55);
             this.Encryptback.TabIndex = 0;
@@ -45,13 +45,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.ClientSize = new System.Drawing.Size(198, 81);
+            this.ClientSize = new System.Drawing.Size(214, 120);
             this.Controls.Add(this.Encryptback);
             this.MaximumSize = new System.Drawing.Size(214, 120);
             this.MinimumSize = new System.Drawing.Size(214, 120);
             this.Name = "Form5";
             this.Text = "Shifr";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form5_FormClosing);
             this.ResumeLayout(false);
 
         }

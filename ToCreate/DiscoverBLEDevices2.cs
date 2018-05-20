@@ -11,13 +11,13 @@ namespace ToCreate
     /// <summary>
     /// Форма Bluetooth поиска устройства и выбора
     /// </summary>
-    public partial class Form2 : Form
+    public partial class DiscoverBLEDevices2 :  MetroFramework.Forms.MetroForm
     {
         // поле пути к файлу, который надо закодировать
         string path;
         // булеое поле для определения нужно ли удалять файл ключа
         bool b;
-        public Form2(string patharg, bool b)
+        public DiscoverBLEDevices2(string patharg, bool b)
         {
             InitializeComponent();
             path = patharg;
@@ -118,7 +118,7 @@ namespace ToCreate
                                 str.Close();
                             }
                             // форма запроса пароля и шифрования
-                            Form3 Passwordandshifr = new Form3(path, device.DeviceName, device.DeviceAddress.ToString(), b);
+                            Passwordandencrypt3 Passwordandshifr = new Passwordandencrypt3(path, device.DeviceName, device.DeviceAddress.ToString(), b);
                             // вызов формы запроса пароля и шифрования
                             Passwordandshifr.ShowDialog();
                             this.Close();
@@ -214,7 +214,7 @@ namespace ToCreate
             if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Devices.txt")|| File.Exists($"../Palon/Devices.txt"))
             {
                 // вызов формы выбора одного из сохраненных устройств
-                Form7 saved = new Form7(path, b);
+                UsedDevices saved = new UsedDevices(path, b);
                 saved.ShowDialog();
                 // проверка - сделан ли уже выбор
                 if (saved.Boo == true)

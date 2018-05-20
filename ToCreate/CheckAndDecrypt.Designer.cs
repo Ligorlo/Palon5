@@ -1,6 +1,6 @@
 ﻿namespace ToCreate
 {
-    partial class Form4
+    partial class CheckAndDecrypt
     {
         /// <summary>
         /// Required designer variable.
@@ -34,7 +34,7 @@
             // 
             // Open
             // 
-            this.Open.Location = new System.Drawing.Point(34, 23);
+            this.Open.Location = new System.Drawing.Point(23, 54);
             this.Open.Name = "Open";
             this.Open.Size = new System.Drawing.Size(190, 85);
             this.Open.TabIndex = 0;
@@ -45,7 +45,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(34, 115);
+            this.label1.Location = new System.Drawing.Point(58, 151);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 1;
@@ -56,12 +56,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.ClientSize = new System.Drawing.Size(258, 134);
+            this.ClientSize = new System.Drawing.Size(254, 173);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Open);
-            this.MaximumSize = new System.Drawing.Size(274, 173);
-            this.MinimumSize = new System.Drawing.Size(274, 173);
+            this.MaximumSize = new System.Drawing.Size(254, 173);
+            this.MinimumSize = new System.Drawing.Size(254, 173);
             this.Name = "Form4";
             this.Text = "Open";
             this.ResumeLayout(false);

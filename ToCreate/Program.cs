@@ -20,7 +20,7 @@ namespace ToCreate
           //try
          // {
          
-                Application.Run(new Form1(args));
+                Application.Run(new Startfrom1(args));
          // }
          // catch (System.ObjectDisposedException)
          // {

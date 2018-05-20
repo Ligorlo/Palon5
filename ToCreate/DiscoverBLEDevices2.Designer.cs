@@ -1,6 +1,6 @@
 ﻿namespace ToCreate
 {
-    partial class Form2
+    partial class DiscoverBLEDevices2
     {
         /// <summary>
         /// Required designer variable.
@@ -39,9 +39,9 @@
             // 
             this.FoundDevices.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.FoundDevices.FormattingEnabled = true;
-            this.FoundDevices.Location = new System.Drawing.Point(12, 12);
+            this.FoundDevices.Location = new System.Drawing.Point(23, 63);
             this.FoundDevices.Name = "FoundDevices";
-            this.FoundDevices.Size = new System.Drawing.Size(315, 225);
+            this.FoundDevices.Size = new System.Drawing.Size(269, 173);
             this.FoundDevices.TabIndex = 0;
             this.FoundDevices.DoubleClick += new System.EventHandler(this.FoundDevices_DoubleClick);
             // 
@@ -57,7 +57,7 @@
             // 
             // Searchdevice
             // 
-            this.Searchdevice.Location = new System.Drawing.Point(371, 12);
+            this.Searchdevice.Location = new System.Drawing.Point(347, 63);
             this.Searchdevice.Name = "Searchdevice";
             this.Searchdevice.Size = new System.Drawing.Size(137, 41);
             this.Searchdevice.TabIndex = 2;
@@ -67,7 +67,7 @@
             // 
             // Choosefromused
             // 
-            this.Choosefromused.Location = new System.Drawing.Point(371, 82);
+            this.Choosefromused.Location = new System.Drawing.Point(347, 135);
             this.Choosefromused.Name = "Choosefromused";
             this.Choosefromused.Size = new System.Drawing.Size(137, 41);
             this.Choosefromused.TabIndex = 3;
@@ -84,18 +84,17 @@
             this.progressBar1.TabIndex = 4;
             this.progressBar1.Visible = false;
             // 
-            // Form2
+            // DiscoverBLEDevices2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.ClientSize = new System.Drawing.Size(526, 335);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.Choosefromused);
             this.Controls.Add(this.Searchdevice);
             this.Controls.Add(this.Indexer);
             this.Controls.Add(this.FoundDevices);
-            this.Name = "Form2";
+            this.Name = "DiscoverBLEDevices2";
             this.Text = "Bluetooth";
             this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);

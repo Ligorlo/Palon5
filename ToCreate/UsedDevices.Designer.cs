@@ -1,6 +1,6 @@
 ﻿namespace ToCreate
 {
-    partial class Form7
+    partial class UsedDevices
     {
         /// <summary>
         /// Required designer variable.
@@ -35,7 +35,7 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(23, 24);
+            this.listBox1.Location = new System.Drawing.Point(23, 63);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(220, 160);
             this.listBox1.TabIndex = 0;
@@ -43,7 +43,7 @@
             // 
             // Back
             // 
-            this.Back.Location = new System.Drawing.Point(283, 12);
+            this.Back.Location = new System.Drawing.Point(289, 33);
             this.Back.Name = "Back";
             this.Back.Size = new System.Drawing.Size(75, 23);
             this.Back.TabIndex = 1;
@@ -55,7 +55,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.ClientSize = new System.Drawing.Size(414, 269);
             this.Controls.Add(this.Back);
             this.Controls.Add(this.listBox1);

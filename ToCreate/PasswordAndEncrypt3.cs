@@ -12,7 +12,7 @@ namespace ToCreate
     /// <summary>
     /// Form3 - класс форма ввода парол и кодирования
     /// </summary>
-    public partial class Form3 : Form
+    public partial class Passwordandencrypt3 :  MetroFramework.Forms.MetroForm
     {
         // путь к файлу
         string path;
@@ -20,9 +20,14 @@ namespace ToCreate
         string Name2;
         // адрес устройства
         string adress;
+        // параметр 
         bool bo;
+        //пароль
+        string pass;
+
         // присвоение свойствам значений
-        public Form3(string path, string ID, string adress, bool bo)
+
+        public Passwordandencrypt3(string path, string ID, string adress, bool bo)
         {
             InitializeComponent();
             this.path = path;
@@ -30,9 +35,18 @@ namespace ToCreate
             this.adress = adress;
             this.bo = bo;
         }
-        private void Form3_Load(object sender, EventArgs e)
-        {
-
+        public Passwordandencrypt3(string path, string ID, string adress, bool bo, string pass)
+        {;
+            this.path = path;
+            Name2 = ID;
+            this.adress = adress;
+            this.bo = bo;
+            this.pass = pass;
+            InitializeComponent();
+            this.Hide();
+            textBox1.Text = pass;
+            textBox2.Text = pass;
+            Ready_Click_1(0, new EventArgs());
         }
         // кодирование файла алгоритмом AES
         private static byte [] EncryptAES(string tocode, byte[] Key, byte[] IV)
