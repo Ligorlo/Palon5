@@ -61,7 +61,7 @@ namespace ToCreate
                 }
             }
             this.assosiatedfile = args;
-            args = new string[1];args[0] = @"\\Mac\Home\Desktop\Снимок экрана 2018-05-20 в 20.42.14.code3";
+            //args = new string[1];args[0] = @"\\Mac\Home\Desktop\Снимок экрана 2018-05-20 в 20.42.14.code3";
             // args - возможный путь
             //( который появляется при открытии файла code3, и включается раскодирование)
             // если же это пустой массив, то открывается сама программа кодирования
