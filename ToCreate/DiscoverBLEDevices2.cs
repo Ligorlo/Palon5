@@ -84,27 +84,35 @@ namespace ToCreate
                                 // прочитываем то что уже есть в файле
                                     DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Devices[]));
                                     FileStream str = new FileStream(pathdev, FileMode.OpenOrCreate);
+                                try
+                                {
                                     Devices[] devices = (Devices[])ser.ReadObject(str);
                                     str.Close();
-                                bool b = true;
-                                // проверяем нет ли уже этого устройства в использованных
-                                foreach (Devices item in devices)
-                                {
-                                    if (Encoding.ASCII.GetString(item.name) == Encoding.ASCII.GetString(devname) && Encoding.ASCII.GetString(item.adress) == Encoding.ASCII.GetString(devad))
+                                    bool b = true;
+                                    // проверяем нет ли уже этого устройства в использованных
+                                    foreach (Devices item in devices)
                                     {
-                                        b = false;
+                                        if (Encoding.ASCII.GetString(item.name) == Encoding.ASCII.GetString(devname) && Encoding.ASCII.GetString(item.adress) == Encoding.ASCII.GetString(devad))
+                                        {
+                                            b = false;
+                                        }
+                                    }
+                                    // добавляем наше устройство 
+                                    if (b)
+                                    {
+                                        // добавляем в массив
+                                        Array.Resize(ref devices, devices.Length + 1);
+                                        devices[devices.Length - 1] = dev;
+                                        File.Delete(pathdev);
+                                        str = new FileStream(pathdev, FileMode.OpenOrCreate);
+                                        ser.WriteObject(str, devices);
+                                        str.Close();
                                     }
                                 }
-                                // добавляем наше устройство 
-                                if (b)
+                                // проверка десериализации
+                                catch (Exception ex)
                                 {
-                                    // добавляем в массив
-                                    Array.Resize(ref devices, devices.Length + 1);
-                                    devices[devices.Length - 1] = dev;
-                                    File.Delete(pathdev);
-                                    str = new FileStream(pathdev, FileMode.OpenOrCreate);
-                                    ser.WriteObject(str, devices);
-                                    str.Close();
+                                    Console.WriteLine("File was changed");
                                 }
                             }
                             // папки не существует, надо создать новую
@@ -178,7 +186,6 @@ namespace ToCreate
         // метод проверки есть ли ещё устройства поблизости и запись их в FoundDevice
         public void Tick(object sender , EventArgs e)
         {
-
             progressBar1.Increment(1);
             if (info != null)
             {

@@ -234,6 +234,7 @@ namespace ToCreate
                                 string direct = Path.ChangeExtension(path, "txt");
                                 int num = 2;
                                 bool exist = true;
+                                // архивируем
                                 while (exist)
                                 {
                                     if (!File.Exists(direct))

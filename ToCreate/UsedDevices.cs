@@ -35,32 +35,14 @@ namespace ToCreate
             // проверка на месте ли ещё файл с девайсами
             if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Devices.txt"))
             {
-                // считываем информацию
-                FileStream s = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Devices.txt", FileMode.Open);
-                // десериализуем
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Devices[]));
-                // записываем вседевайсы в listbox
-                Devices[] device = (Devices[])ser.ReadObject(s);
-                string[,] forlistbox = new string[device.Length, 2];
-                for (int i = 0; i < forlistbox.GetLength(0); i++)
+                try
                 {
-                    forlistbox[i, 0] = Encoding.ASCII.GetString(device[i].name);
-                    forlistbox[i, 1] = Encoding.ASCII.GetString(device[i].adress);
-                    listBox1.Items.Add(forlistbox[i, 0]);
-                }
-                toconsole = forlistbox;
-                s.Close();
-            }
-            else
-            {
-                // нет appdata на компе значит сохраняем в другом месте 
-                if (File.Exists($"../Palon/Devices.txt"))
-                {
-                    // берем названия девайсов 
+                    // считываем информацию
                     FileStream s = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Devices.txt", FileMode.Open);
+                    // десериализуем
                     DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Devices[]));
+                    // записываем вседевайсы в listbox
                     Devices[] device = (Devices[])ser.ReadObject(s);
-                    // записываем названия в listbox
                     string[,] forlistbox = new string[device.Length, 2];
                     for (int i = 0; i < forlistbox.GetLength(0); i++)
                     {
@@ -70,6 +52,40 @@ namespace ToCreate
                     }
                     toconsole = forlistbox;
                     s.Close();
+                }
+                // проверка целостности файла девайсов
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Devices file was changed");
+                }
+            }
+            else
+            {
+                // нет appdata на компе значит сохраняем в другом месте 
+                if (File.Exists($"../Palon/Devices.txt"))
+                {
+                    try
+                    {
+                        // берем названия девайсов 
+                        FileStream s = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Devices.txt", FileMode.Open);
+                        DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Devices[]));
+                        Devices[] device = (Devices[])ser.ReadObject(s);
+                        // записываем названия в listbox
+                        string[,] forlistbox = new string[device.Length, 2];
+                        for (int i = 0; i < forlistbox.GetLength(0); i++)
+                        {
+                            forlistbox[i, 0] = Encoding.ASCII.GetString(device[i].name);
+                            forlistbox[i, 1] = Encoding.ASCII.GetString(device[i].adress);
+                            listBox1.Items.Add(forlistbox[i, 0]);
+                        }
+                        toconsole = forlistbox;
+                        s.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Devices file was changed");
+                    }
+
                 }
                 else
                 {

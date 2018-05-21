@@ -61,94 +61,102 @@ namespace ToCreate
 
             this.directory = directory;
             // файл
-            if (directory)
+            try
             {
-                // проверка надо ли удалять ключ
-                if (b == false)
+                if (directory)
                 {
-                    File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
-                    //this.Close();
-                }
-                else
-                {
-                    this.IV = IV;
-                    this.key = key;
-                    path = Path.ChangeExtension(path, cod.Rassh);
-                    this.path = path;
-                    this.num = num;
-                    this.cod = cod;
-                    InitializeComponent();
-                }
-            }
-            // папка
-            else
-            {
-                // проверка надо ли удалять ключ
-                if (b == false)
-                {
-                    File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt");
-                    //this.Close();
-                }
-                else
-                {
-                    this.key = key;
-                    this.IV = IV;
-                    this.path = path.Remove(path.Length - 1);
-                    this.num = num;
-                    this.cod = cod;
-                    InitializeComponent();
-                }
-            }
-            // проверка 
-            if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon"))
-            {
-                // проверка существует ли журнал
-                if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt"))
-                {
-                    // добавляем наше устройство 
-                    normpath = path;
-                    // сериализация данных о файле и о том как мы его должны закодировать 
-                    DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Together));
-                    FileStream str = null; 
-                    try
+                    // проверка надо ли удалять ключ
+                    if (b == false)
                     {
-                       str = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt", FileMode.Open);
+                        File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
+                        //this.Close();
                     }
-                    catch
+                    else
                     {
-                        MessageBox.Show("Two processes in one time");
-                        Application.Exit();
+                        this.IV = IV;
+                        this.key = key;
+                        path = Path.ChangeExtension(path, cod.Rassh);
+                        this.path = path;
+                        this.num = num;
+                        this.cod = cod;
+                        InitializeComponent();
                     }
-                    Together a = (Together)json.ReadObject(str);
-                    str.Close();
-                    File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt");
-                    Array.Resize(ref a.mas, a.mas.Length + 1);
-                    a.mas[a.mas.Length - 1] = new Processonefile(adr, pass, normpath, directory);
-                    str = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt", FileMode.Create);
-                    json.WriteObject(str, a);
-                    str.Close();
+                }
+                // папка
+                else
+                {
+                    // проверка надо ли удалять ключ
+                    if (b == false)
+                    {
+                        File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt");
+                        //this.Close();
+                    }
+                    else
+                    {
+                        this.key = key;
+                        this.IV = IV;
+                        this.path = path.Remove(path.Length - 4);
+                        this.num = num;
+                        this.cod = cod;
+                        InitializeComponent();
+                    }
+                }
+                // проверка 
+                if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon"))
+                {
+                    // проверка существует ли журнал
+                    if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt"))
+                    {
+                        // добавляем наше устройство 
+                        normpath = path;
+                        // сериализация данных о файле и о том как мы его должны закодировать 
+                        DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Together));
+                        FileStream str = null;
+                        try
+                        {
+                            str = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt", FileMode.Open);
+                            Together a = (Together)json.ReadObject(str);
+                            str.Close();
+                            File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt");
+                            Array.Resize(ref a.mas, a.mas.Length + 1);
+                            a.mas[a.mas.Length - 1] = new Processonefile(adr, pass, normpath, directory);
+                            str = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt", FileMode.Create);
+                            json.WriteObject(str, a);
+                            str.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Two processes in one time");
+                            Application.Exit();
+                        }
+
+                    }
+                    else
+                    {
+                        // создаем журнал и добавляем туда первое устройство
+                        normpath = path;
+                        DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Together));
+                        Processonefile type = new Processonefile(adr, pass, normpath, directory);
+                        // класс одного файла
+                        Processonefile[] typemas = new Processonefile[1] { type };
+                        // класс всех изменяемых файлов из журнала
+                        Together a = new Together(typemas);
+                        FileStream str = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt", FileMode.Create);
+                        json.WriteObject(str, a);
+                        str.Close();
+                    }
                 }
                 else
                 {
-                    // создаем журнал и добавляем туда первое устройство
-                    normpath = path;
-                    DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Together));
-                    Processonefile type = new Processonefile(adr, pass, normpath, directory);
-                    // класс одного файла
-                    Processonefile[] typemas = new Processonefile[1] { type };
-                    // класс всех изменяемых файлов из журнала
-                    Together a = new Together(typemas);
-                    FileStream str = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt", FileMode.Create);
-                    json.WriteObject(str, a);
-                    str.Close();
+                    MessageBox.Show("Sorry, something had happened");
+                    this.Close();
                 }
+                Encryptback.Text = $"Encrypt back \n {Path.ChangeExtension(path, cod.Rassh)}";
             }
-            else
+            catch(IOException ex)
             {
-                MessageBox.Show("Sorry, something had happened");
-                this.Close();
+                MessageBox.Show("Key were deleted");
             }
-            Encryptback.Text = $"Encrypt back \n {Path.ChangeExtension(path, cod.Rassh)}";
         }
         // метод кодирования
         public void proove()
@@ -157,102 +165,120 @@ namespace ToCreate
             // файл
             if (directory)
             {
-                // прочитали
-                byte[] bytearr2 = File.ReadAllBytes(path);
-                File.Delete(path);
-                // перевели в base64
-                string Inbaseforencrypt = Convert.ToBase64String(bytearr2);
-                // зашифровали
-                byte[] tofile = EncryptAES(Inbaseforencrypt, key, IV);
-                // засереализовали
-                Connectwithakey main = new Connectwithakey(tofile, Encoding.ASCII.GetBytes(num.ToString()));
-                DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Connectwithakey));
-                FileStream file = new FileStream(path, FileMode.OpenOrCreate);
-                json.WriteObject(file, main);
-                file.Close();
-                bool filename = true;
-                int number = 2;
-                string pathcheck = path;
-                // подбираем файл таким образом чтобы не было повтора
-                pathcheck = Path.ChangeExtension(pathcheck, ".code3");
-                if (File.Exists(pathcheck))
+                try
                 {
-                    while (filename)
+                    // прочитали
+                    byte[] bytearr2 = File.ReadAllBytes(path);
+                    File.Delete(path);
+                    // перевели в base64
+                    string Inbaseforencrypt = Convert.ToBase64String(bytearr2);
+                    // зашифровали
+                    byte[] tofile = EncryptAES(Inbaseforencrypt, key, IV);
+                    // засереализовали
+                    Connectwithakey main = new Connectwithakey(tofile, Encoding.ASCII.GetBytes(num.ToString()));
+                    DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Connectwithakey));
+                    FileStream file = new FileStream(path, FileMode.OpenOrCreate);
+                    json.WriteObject(file, main);
+                    file.Close();
+                    bool filename = true;
+                    int number = 2;
+                    string pathcheck = path;
+                    // подбираем файл таким образом чтобы не было повтора
+                    pathcheck = Path.ChangeExtension(pathcheck, ".code3");
+                    if (File.Exists(pathcheck))
                     {
-                        pathcheck = Path.ChangeExtension(pathcheck, "");
-                        pathcheck = pathcheck.Remove(pathcheck.Length - 1);
-                        pathcheck = $"{pathcheck}{number}";
-                        pathcheck = Path.ChangeExtension(pathcheck, ".code3");
-                        if (!File.Exists(pathcheck))
+                        while (filename)
                         {
-                            filename = false;
+                            pathcheck = Path.ChangeExtension(pathcheck, "");
+                            pathcheck = pathcheck.Remove(pathcheck.Length - 1);
+                            pathcheck = $"{pathcheck}{number}";
+                            pathcheck = $"{pathcheck}.txt";
+                            pathcheck = Path.ChangeExtension(pathcheck, ".code3");
+                            if (!File.Exists(pathcheck))
+                            {
+                                filename = false;
+                            }
                         }
                     }
+                    File.Move(path, pathcheck);
                 }
-                File.Move(path, pathcheck);
+                catch (IOException)
+                {
+                    MessageBox.Show("One file trying to be decrypted in same time");
+                    this.Close();
+                }
             }
             // папка 
             else
             {
-                // архивируем (подбираем свободный путь)
-                string direct = Path.ChangeExtension(path, cod.Rassh);
-                int number2 = 2;
-                bool exist = true;
-                while (exist)
+                try
                 {
-                    if (!File.Exists(direct))
+                    // архивируем (подбираем свободный путь)
+                    string direct = Path.ChangeExtension(path, cod.Rassh);
+                    int number2 = 2;
+                    bool exist = true;
+                    while (exist)
                     {
-                        ZipFile.CreateFromDirectory(path, direct);
-                        exist = false;
-                    }
-                    else
-                    {
-                        direct = Path.ChangeExtension(direct, $"");
-                        direct.Remove(direct.Length - 1);
-                        direct = $"direct{number2}";
-                        direct = Path.ChangeExtension(direct, cod.Rassh);
-                        number2++;
-                    }
-                }
-                // удаляем первоначальную папку
-                Directory.Delete(path, true);
-                path = direct;
-                // вноь считываем 
-                byte[] bytearr2 = File.ReadAllBytes(path);
-                // удаляем заархивироанный файл
-                File.Delete(path);
-                // зашифровываем 
-                string Inbaseforencrypt = Convert.ToBase64String(bytearr2);
-                byte[] tofile = EncryptAES(Inbaseforencrypt, key, IV);
-                Connectwithakey main = new Connectwithakey(tofile, Encoding.ASCII.GetBytes(num.ToString()));
-                DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Connectwithakey));
-                FileStream file = new FileStream(path, FileMode.OpenOrCreate);
-                // запиываем обратно 
-                json.WriteObject(file, main);
-                file.Close();
-                // end with main file
-                // start with key file
-                bool filename = true;
-                int number = 2;
-                string pathcheck = direct;
-                // подбираем файл таким образом чтобы не было повтора
-                pathcheck = Path.ChangeExtension(pathcheck, ".code4");
-                if (File.Exists(pathcheck))
-                {
-                    while (filename)
-                    {
-                        pathcheck = Path.ChangeExtension(pathcheck, "");
-                        pathcheck = pathcheck.Remove(pathcheck.Length - 1);
-                        pathcheck = $"{pathcheck}{number}";
-                        pathcheck = Path.ChangeExtension(pathcheck, ".code4");
-                        if (!File.Exists(pathcheck))
+                        if (!File.Exists(direct))
                         {
-                            filename = false;
+                            ZipFile.CreateFromDirectory(path, direct);
+                            exist = false;
+                        }
+                        else
+                        {
+                            direct = Path.ChangeExtension(direct, $"");
+                            direct.Remove(direct.Length - 1);
+                            direct = $"direct{number2}";
+                            direct = $"direct{number2}.txt";
+                            direct = Path.ChangeExtension(direct, cod.Rassh);
+                            number2++;
                         }
                     }
+                    // удаляем первоначальную папку
+                    Directory.Delete(path, true);
+                    path = direct;
+                    // вноь считываем 
+                    byte[] bytearr2 = File.ReadAllBytes(path);
+                    // удаляем заархивироанный файл
+                    File.Delete(path);
+                    // зашифровываем 
+                    string Inbaseforencrypt = Convert.ToBase64String(bytearr2);
+                    byte[] tofile = EncryptAES(Inbaseforencrypt, key, IV);
+                    Connectwithakey main = new Connectwithakey(tofile, Encoding.ASCII.GetBytes(num.ToString()));
+                    DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Connectwithakey));
+                    FileStream file = new FileStream(path, FileMode.OpenOrCreate);
+                    // запиываем обратно 
+                    json.WriteObject(file, main);
+                    file.Close();
+                    // end with main file
+                    // start with key file
+                    bool filename = true;
+                    int number = 2;
+                    string pathcheck = direct;
+                    // подбираем файл таким образом чтобы не было повтора
+                    pathcheck = Path.ChangeExtension(pathcheck, ".code4");
+                    if (File.Exists(pathcheck))
+                    {
+                        while (filename)
+                        {
+                            pathcheck = Path.ChangeExtension(pathcheck, "");
+                            pathcheck = pathcheck.Remove(pathcheck.Length - 1);
+                            pathcheck = $"{pathcheck}{number}";
+                            pathcheck = Path.ChangeExtension(pathcheck, ".code4");
+                            if (!File.Exists(pathcheck))
+                            {
+                                filename = false;
+                            }
+                        }
+                    }
+                    File.Move(direct, pathcheck);
+                    // переводим файл в новое расширение
                 }
-                // переводим файл в новое расширение
-                File.Move(direct, pathcheck);
+                catch
+                {
+                    MessageBox.Show("You've already tried to encrypt one folder");
+                    this.Close();
+                }
             }
         }
         // кнопка шифрования

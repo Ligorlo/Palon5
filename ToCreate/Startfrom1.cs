@@ -9,7 +9,7 @@ using System.Runtime.Serialization.Json;
 namespace ToCreate
 {
     /// <summary>
-    /// Начальный класс форм1, где пользоватеь выбирает, что делать с файлом
+    /// Начальный класс Startfrom1, где пользоватеь выбирает, что делать с файлом
     /// </summary>
     public partial class Startfrom1 : MetroFramework.Forms.MetroForm
     {
@@ -24,7 +24,7 @@ namespace ToCreate
                 {
                     FileStream str = new FileStream($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Using.txt", FileMode.Open);
                     DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(Together));
-                    Together a = (Together)json.ReadObject(str);
+                    Together Tojournal = (Together)json.ReadObject(str);
                     // массив запущенных процессов
                     Process[] pr = Process.GetProcesses();
                     str.Close();
@@ -38,15 +38,15 @@ namespace ToCreate
                         }
                     }
                     // проверка числа запущенных программ PALON
-                    if (myprogramm <= a.mas.Length)
+                    if (myprogramm <= Tojournal.mas.Length)
                     {
-                        for (int i = 0; i < a.mas.Length; i++)
+                        for (int i = 0; i < Tojournal.mas.Length; i++)
                         {
                             // проверка существует ли нужный нам файл
-                            if (File.Exists(a.mas[i].path))
+                            if (File.Exists(Tojournal.mas[i].path))
                             {
                                 // кодируем файл
-                                Passwordandencrypt3 extra = new Passwordandencrypt3(a.mas[i].path, "", a.mas[i].adr, a.mas[i].direct);
+                                Passwordandencrypt3 extra = new Passwordandencrypt3(Tojournal.mas[i].path, "", Tojournal.mas[i].adr, Tojournal.mas[i].direct);
                             }
                         }
                         // удаляем
@@ -61,7 +61,7 @@ namespace ToCreate
                 }
             }
             this.assosiatedfile = args;
-            //args = new string[1];args[0] = @"\\Mac\Home\Desktop\Снимок экрана 2018-05-20 в 20.42.14.code3";
+            //args = new string[1];args[0] = @"\\Mac\Home\Desktop\ваваав.code4";
             // args - возможный путь
             //( который появляется при открытии файла code3, и включается раскодирование)
             // если же это пустой массив, то открывается сама программа кодирования

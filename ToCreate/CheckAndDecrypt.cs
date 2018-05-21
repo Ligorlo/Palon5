@@ -91,6 +91,7 @@ namespace ToCreate
                 {
                     todecr = DecryptAES(FindkeyNumber, key, IV);
                 }
+                // провеока кодирования
                 catch(Exception ex)
                 {
                     MessageBox.Show("That file has been changed or was encrypted on another computer");
@@ -119,6 +120,7 @@ namespace ToCreate
                         pathcheck = pathcheck.Remove(pathcheck.Length - 1);
                         pathcheck = $"{pathcheck}{number}";
                         number++;
+                        pathcheck = $"{pathcheck}.txt";
                         pathcheck = Path.ChangeExtension(pathcheck, cod.Rassh);
                         if (!File.Exists(pathcheck))
                         {
@@ -192,6 +194,7 @@ namespace ToCreate
                         pathcheck = pathcheck.Remove(pathcheck.Length - 1);
                         pathcheck = $"{pathcheck}{number}";
                         number++;
+                        pathcheck = $"{pathcheck}.txt";
                         pathcheck = Path.ChangeExtension(pathcheck, cod.Rassh);
                         if (!File.Exists(pathcheck))
                         {
@@ -211,6 +214,7 @@ namespace ToCreate
                         pathcheck2 = pathcheck2.Remove(pathcheck2.Length - 1);
                         pathcheck2 = $"{pathcheck2}{number2}";
                         number2++;
+                        pathcheck2 = $"{pathcheck2}.txt";
                         pathcheck2 = Path.ChangeExtension(pathcheck2, "");
                         if (!File.Exists(pathcheck2))
                         {
@@ -315,74 +319,27 @@ namespace ToCreate
                     FileStream st = null;
                     if (File.Exists(path))
                     {
-                        st = new FileStream(path, FileMode.Open);
-                    }
-                    else
-                    {
-                        this.Close();
-                    }
-                        Connectwithakey con = null;
-                    try
-                    {
-                        con = (Connectwithakey)json2.ReadObject(st);
-                        FindkeyNumber = con.file;
-                        // номер ключа
-                        this.num = int.Parse(Encoding.ASCII.GetString(con.keynumber));
-                        st.Close();
-                        byte[] serkey = null;
-                        // извлечение ключа из файла
-                        if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt"))
+                        try
                         {
-                            serkey = File.ReadAllBytes($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
-                            IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
-                            WindowsIdentity win = new WindowsIdentity(accountToken);
-                            // раскодируем
-                            ID = win.User.ToString();
-                            // ксорим с id в ASCII
-                            byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
-                            int q = 0;
-                            for (int i = 0; i < serkey.Length; i++)
-                            {
-                                if (q == tocodekey.Length)
-                                    q = 0;
-                                serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
-                            }
-                            // создём вспомогательный файл для десериализации и извдечение полей класса
-                            string help;
-                            if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming"))
-                            {
-                                help = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}Help.txt";
-                            }
-                            else
-                            {
-                                help = $"../Pakman{num}Help.txt";
-                            }
-                            // файл нужен для десериализации (так быстрее чем с memorystream так как есть writeallbytes)
-                            File.Create(help).Close();
-                            File.WriteAllBytes(help, serkey);
-                            FileStream l = new FileStream(help, FileMode.Open);
-                            cod = (ToCode)json.ReadObject(l);
-                            l.Close();
-                            // удаляем вспомогательный файл
-                            File.Delete(help);
-                            // проверяем совпадение устройста 
-                            devicename = cod.DeviceName;
-                            deviceadress = cod.DeviceAdress;
-                            // компонента bluetooth
-                            BluetoothComponent component = new BluetoothComponent();
-                            // добавляем метод который будет сделать если найдено новое устройство
-                            component.DiscoverDevicesProgress += BluetoothDescovery;
-                            // метод в конце работы
-                            component.DiscoverDevicesComplete += BluetoothEndDescovery;
-                            // поиск устройства
-                            component.DiscoverDevicesAsync(10, true, false, true, true, 0);
+                            st = new FileStream(path, FileMode.Open);
                         }
-                        else
+                        catch(IOException ex)
                         {
-                            if (File.Exists($"../Palon/Pakman{num}.txt"))
+                            Console.WriteLine("Try again");
+                        }
+                        try
+                        {
+                            Connectwithakey con = null;
+                            con = (Connectwithakey)json2.ReadObject(st);
+                            FindkeyNumber = con.file;
+                            // номер ключа
+                            this.num = int.Parse(Encoding.ASCII.GetString(con.keynumber));
+                            st.Close();
+                            byte[] serkey = null;
+                            // извлечение ключа из файла
+                            if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt"))
                             {
-                                serkey = File.ReadAllBytes($"../Palon/Pakman{num}.txt");
-
+                                serkey = File.ReadAllBytes($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
                                 IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
                                 WindowsIdentity win = new WindowsIdentity(accountToken);
                                 // раскодируем
@@ -428,20 +385,72 @@ namespace ToCreate
                             }
                             else
                             {
-                                MessageBox.Show("Something has happened with keys");
-                                this.Close();
+                                if (File.Exists($"../Palon/Pakman{num}.txt"))
+                                {
+                                    serkey = File.ReadAllBytes($"../Palon/Pakman{num}.txt");
+
+                                    IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
+                                    WindowsIdentity win = new WindowsIdentity(accountToken);
+                                    // раскодируем
+                                    ID = win.User.ToString();
+                                    // ксорим с id в ASCII
+                                    byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
+                                    int q = 0;
+                                    for (int i = 0; i < serkey.Length; i++)
+                                    {
+                                        if (q == tocodekey.Length)
+                                            q = 0;
+                                        serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
+                                    }
+                                    // создём вспомогательный файл для десериализации и извдечение полей класса
+                                    string help;
+                                    if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming"))
+                                    {
+                                        help = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}Help.txt";
+                                    }
+                                    else
+                                    {
+                                        help = $"../Pakman{num}Help.txt";
+                                    }
+                                    // файл нужен для десериализации (так быстрее чем с memorystream так как есть writeallbytes)
+                                    File.Create(help).Close();
+                                    File.WriteAllBytes(help, serkey);
+                                    FileStream l = new FileStream(help, FileMode.Open);
+                                    cod = (ToCode)json.ReadObject(l);
+                                    l.Close();
+                                    // удаляем вспомогательный файл
+                                    File.Delete(help);
+                                    // проверяем совпадение устройста 
+                                    devicename = cod.DeviceName;
+                                    deviceadress = cod.DeviceAdress;
+                                    // компонента bluetooth
+                                    BluetoothComponent component = new BluetoothComponent();
+                                    // добавляем метод который будет сделать если найдено новое устройство
+                                    component.DiscoverDevicesProgress += BluetoothDescovery;
+                                    // метод в конце работы
+                                    component.DiscoverDevicesComplete += BluetoothEndDescovery;
+                                    // поиск устройства
+                                    component.DiscoverDevicesAsync(10, true, false, true, true, 0);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Something has happened with keys");
+                                    this.Close();
+                                }
                             }
+                            //безопастность (учетная запись)
                         }
-                        //безопастность (учетная запись)
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Two programms are trying to encript file");
+                            this.Close();
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
                         MessageBox.Show("Two programms are trying to encript file");
                         this.Close();
                     }
-                    
-                   
-                   
                 }
                 else
                 {
@@ -451,87 +460,90 @@ namespace ToCreate
                     FileStream st = null;
                     if (File.Exists(path))
                     {
-                        st = new FileStream(path, FileMode.Open);
-                    }
-                    else
-                    {
-                        this.Close();
-                    }
-                    Connectwithakey con = null;
-                    try
-                    {
-                        con = (Connectwithakey)json2.ReadObject(st);
-                        FindkeyNumber = con.file;
-                        // номер ключа
-                        this.num = int.Parse(Encoding.ASCII.GetString(con.keynumber));
-                        st.Close();
-                        // извлечение ключа из файла
-                        byte[] serkey = null;
-                        // извлечение ключа из файла
-                        if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt"))
+                        
+                        try
                         {
-                            serkey = File.ReadAllBytes($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt");
-                        }
-                        else
-                        {
-                            if (File.Exists($"../Palon/PakmanD{num}.txt"))
+                            st = new FileStream(path, FileMode.Open);
+                            Connectwithakey con = null;
+                            con = (Connectwithakey)json2.ReadObject(st);
+                            FindkeyNumber = con.file;
+                            // номер ключа
+                            this.num = int.Parse(Encoding.ASCII.GetString(con.keynumber));
+                            st.Close();
+                            // извлечение ключа из файла
+                            byte[] serkey = null;
+                            // извлечение ключа из файла
+                            if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt"))
                             {
-                                serkey = File.ReadAllBytes($"../Palon/PakmanD{num}.txt");
+                                serkey = File.ReadAllBytes($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt");
                             }
                             else
                             {
-                                MessageBox.Show("Something has happened with keys");
-                                this.Close();
+                                if (File.Exists($"../Palon/PakmanD{num}.txt"))
+                                {
+                                    serkey = File.ReadAllBytes($"../Palon/PakmanD{num}.txt");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Something has happened with keys");
+                                    this.Close();
+                                }
                             }
+                            //безопастность (учетная запись)
+                            IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
+                            WindowsIdentity win = new WindowsIdentity(accountToken);
+                            // раскодируем ксоря c ID в ASCII
+                            ID = win.User.ToString();
+                            byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
+                            int q = 0;
+                            for (int i = 0; i < serkey.Length; i++)
+                            {
+                                if (q == tocodekey.Length)
+                                    q = 0;
+                                serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
+                            }
+                            // создём вспомогательный файл для десериализации и извдечение полей класса
+                            string help;
+                            if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming"))
+                            {
+                                help = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}Help.txt";
+                            }
+                            else
+                            {
+                                help = $"../PakmanD{num}Help.txt";
+                            }
+                            // перезаписываем файл для десериализации так удобней чем при memorystream так как writeallbytes
+                            File.Create(help).Close();
+                            File.WriteAllBytes(help, serkey);
+                            FileStream l = new FileStream(help, FileMode.Open);
+                            cod = (ToCode)json.ReadObject(l);
+                            l.Close();
+                            // удаляем вспомогательный файл
+                            File.Delete(help);
+                            // проверяем совпадение устройста 
+                            devicename = cod.DeviceName;
+                            deviceadress = cod.DeviceAdress;
+                            // создаём компоненту поиска
+                            BluetoothComponent component = new BluetoothComponent();
+                            // добавляем метод при каждом нахождении нового устройствва
+                            component.DiscoverDevicesProgress += BluetoothDescovery;
+                            // метод в конце поиска
+                            component.DiscoverDevicesComplete += BluetoothEndDescovery;
+                            // начало писка
+                            component.DiscoverDevicesAsync(10, true, false, true, true, 0);
                         }
-                        //безопастность (учетная запись)
-                        IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
-                        WindowsIdentity win = new WindowsIdentity(accountToken);
-                        // раскодируем ксоря c ID в ASCII
-                        ID = win.User.ToString();
-                        byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
-                        int q = 0;
-                        for (int i = 0; i < serkey.Length; i++)
+                        catch (Exception ex)
                         {
-                            if (q == tocodekey.Length)
-                                q = 0;
-                            serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
+                            MessageBox.Show("Two programms are trying to encript file");
+                            this.Close();
                         }
-                        // создём вспомогательный файл для десериализации и извдечение полей класса
-                        string help;
-                        if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming"))
-                        {
-                            help = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}Help.txt";
-                        }
-                        else
-                        {
-                            help = $"../PakmanD{num}Help.txt";
-                        }
-                        // перезаписываем файл для десериализации так удобней чем при memorystream так как writeallbytes
-                        File.Create(help).Close();
-                        File.WriteAllBytes(help, serkey);
-                        FileStream l = new FileStream(help, FileMode.Open);
-                        cod = (ToCode)json.ReadObject(l);
-                        l.Close();
-                        // удаляем вспомогательный файл
-                        File.Delete(help);
-                        // проверяем совпадение устройста 
-                        devicename = cod.DeviceName;
-                        deviceadress = cod.DeviceAdress;
-                        // создаём компоненту поиска
-                        BluetoothComponent component = new BluetoothComponent();
-                        // добавляем метод при каждом нахождении нового устройствва
-                        component.DiscoverDevicesProgress += BluetoothDescovery;
-                        // метод в конце поиска
-                        component.DiscoverDevicesComplete += BluetoothEndDescovery;
-                        // начало писка
-                        component.DiscoverDevicesAsync(10, true, false, true, true, 0);
                     }
-                    catch (Exception ex)
+                    else
                     {
                         MessageBox.Show("Two programms are trying to encript file");
                         this.Close();
                     }
+                   
                     
                 }
             }
@@ -550,86 +562,89 @@ namespace ToCreate
                     FileStream st = null;
                     if (File.Exists(path))
                     {
-                        st = new FileStream(path, FileMode.Open);
-                    }
-                    else
-                    {
-                        this.Close();
-                    }
-                    Connectwithakey con = null;
-                    try
-                    {
-                        con = (Connectwithakey)json2.ReadObject(st);
-                        FindkeyNumber = con.file;
-                        // номер ключа
-                        this.num = int.Parse(Encoding.ASCII.GetString(con.keynumber));
-                        st.Close();
-                        // извлечение ключа из файла
-                        byte[] serkey = null;
-                        // извлечение ключа из файла
-                        if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt"))
+                        
+                        try
                         {
-                            serkey = File.ReadAllBytes($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
-                        }
-                        else
-                        {
-                            if (File.Exists($"../Palon/Pakman{num}.txt"))
+                            st = new FileStream(path, FileMode.Open);
+                            Connectwithakey con = null;
+                            con = (Connectwithakey)json2.ReadObject(st);
+                            FindkeyNumber = con.file;
+                            // номер ключа
+                            this.num = int.Parse(Encoding.ASCII.GetString(con.keynumber));
+                            st.Close();
+                            // извлечение ключа из файла
+                            byte[] serkey = null;
+                            // извлечение ключа из файла
+                            if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt"))
                             {
-                                serkey = File.ReadAllBytes($"../Palon/Pakman{num}.txt");
+                                serkey = File.ReadAllBytes($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
                             }
                             else
                             {
-                                MessageBox.Show("Something has happened with keys");
-                                this.Close();
+                                if (File.Exists($"../Palon/Pakman{num}.txt"))
+                                {
+                                    serkey = File.ReadAllBytes($"../Palon/Pakman{num}.txt");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Something has happened with keys");
+                                    this.Close();
+                                }
+                            }
+                            //безопастность (учетная запись)
+                            IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
+                            WindowsIdentity win = new WindowsIdentity(accountToken);
+                            // раскодируем ксоря с id ASCII
+                            ID = win.User.ToString();
+                            byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
+                            int q = 0;
+                            for (int i = 0; i < serkey.Length; i++)
+                            {
+                                if (q == tocodekey.Length)
+                                    q = 0;
+                                serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
+                            }
+                            // создём вспомогательный файл для десериализации и извдечение полей класса
+                            string help;
+                            if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming"))
+                            {
+                                help = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}Help.txt";
+                            }
+                            else
+                            {
+                                help = $"../Pakman{num}Help.txt";
+                            }
+                            File.Create(help).Close();
+                            File.WriteAllBytes(help, serkey);
+                            FileStream l = new FileStream(help, FileMode.Open);
+                            cod = (ToCode)json.ReadObject(l);
+                            l.Close();
+                            // удаляем вспомогательный файл
+                            File.Delete(help);
+                            // проверяем совпадение устройста 
+                            devicename = cod.DeviceName;
+                            deviceadress = cod.DeviceAdress;
+                            // если устройства нет рядом просим ввести пароль
+                            NotFoundCheckingPassword password = new NotFoundCheckingPassword(cod);
+                            password.ShowDialog();
+                            // проверка верности пароля
+                            if (password.Pasbool)
+                            {
+                                Redeem();
                             }
                         }
-                        //безопастность (учетная запись)
-                        IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
-                        WindowsIdentity win = new WindowsIdentity(accountToken);
-                        // раскодируем ксоря с id ASCII
-                        ID = win.User.ToString();
-                        byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
-                        int q = 0;
-                        for (int i = 0; i < serkey.Length; i++)
+                        catch (Exception ex)
                         {
-                            if (q == tocodekey.Length)
-                                q = 0;
-                            serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
-                        }
-                        // создём вспомогательный файл для десериализации и извдечение полей класса
-                        string help;
-                        if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming"))
-                        {
-                            help = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}Help.txt";
-                        }
-                        else
-                        {
-                            help = $"../Pakman{num}Help.txt";
-                        }
-                        File.Create(help).Close();
-                        File.WriteAllBytes(help, serkey);
-                        FileStream l = new FileStream(help, FileMode.Open);
-                        cod = (ToCode)json.ReadObject(l);
-                        l.Close();
-                        // удаляем вспомогательный файл
-                        File.Delete(help);
-                        // проверяем совпадение устройста 
-                        devicename = cod.DeviceName;
-                        deviceadress = cod.DeviceAdress;
-                        // если устройства нет рядом просим ввести пароль
-                        NotFoundCheckingPassword password = new NotFoundCheckingPassword(cod);
-                        password.ShowDialog();
-                        // проверка верности пароля
-                        if (password.Pasbool)
-                        {
-                            Redeem();
+                            MessageBox.Show("Two programms are trying to encript file");
+                            this.Close();
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
                         MessageBox.Show("Two programms are trying to encript file");
                         this.Close();
                     }
+                    
                     
                 }
                 else
@@ -640,86 +655,90 @@ namespace ToCreate
                     FileStream st = null;
                     if (File.Exists(path))
                     {
-                        st = new FileStream(path, FileMode.Open);
-                    }
-                    else
-                    {
-                        this.Close();
-                    }
-                    Connectwithakey con = null;
-                    try
-                    {
-                        con = (Connectwithakey)json2.ReadObject(st);
-                        FindkeyNumber = con.file;
-                        // номер ключа
-                        this.num = int.Parse(Encoding.ASCII.GetString(con.keynumber));
-                        st.Close();
-                        // извлечение ключа из файла
-                        byte[] serkey = null;
-                        // извлечение ключа из файла
-                        if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt"))
+                        
+                        try
                         {
-                            serkey = File.ReadAllBytes($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt");
-                        }
-                        else
-                        {
-                            if (File.Exists($"../Palon/PakmanD{num}.txt"))
+                            st = new FileStream(path, FileMode.Open);
+                            Connectwithakey con = null;
+                            con = (Connectwithakey)json2.ReadObject(st);
+                            FindkeyNumber = con.file;
+                            // номер ключа
+                            this.num = int.Parse(Encoding.ASCII.GetString(con.keynumber));
+                            st.Close();
+                            // извлечение ключа из файла
+                            byte[] serkey = null;
+                            // извлечение ключа из файла
+                            if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt"))
                             {
-                                serkey = File.ReadAllBytes($"../Palon/PakmanD{num}.txt");
+                                serkey = File.ReadAllBytes($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}.txt");
                             }
                             else
                             {
-                                MessageBox.Show("Something has happened with keys");
-                                this.Close();
+                                if (File.Exists($"../Palon/PakmanD{num}.txt"))
+                                {
+                                    serkey = File.ReadAllBytes($"../Palon/PakmanD{num}.txt");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Something has happened with keys");
+                                    this.Close();
+                                }
+                            }//безопастность (учетная запись)
+                            IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
+                            WindowsIdentity win = new WindowsIdentity(accountToken);
+                            // раскодируем ксоря с ID в ASCII
+                            ID = win.User.ToString();
+                            byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
+                            int q = 0;
+                            for (int i = 0; i < serkey.Length; i++)
+                            {
+                                if (q == tocodekey.Length)
+                                    q = 0;
+                                serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
                             }
-                        }//безопастность (учетная запись)
-                        IntPtr accountToken = WindowsIdentity.GetCurrent().Token;
-                        WindowsIdentity win = new WindowsIdentity(accountToken);
-                        // раскодируем ксоря с ID в ASCII
-                        ID = win.User.ToString();
-                        byte[] tocodekey = Encoding.ASCII.GetBytes(ID);
-                        int q = 0;
-                        for (int i = 0; i < serkey.Length; i++)
-                        {
-                            if (q == tocodekey.Length)
-                                q = 0;
-                            serkey[i] = (byte)(serkey[i] ^ tocodekey[q]);
+                            // создём вспомогательный файл для десериализации и извдечение полей класса
+                            string help;
+                            if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming"))
+                            {
+                                help = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}Help.txt";
+                            }
+                            else
+                            {
+                                help = $"../PakmanD{num}Help.txt";
+                            }
+                            // так быстрее так как в memorystream нет writeallbytes
+                            File.Create(help).Close();
+                            File.WriteAllBytes(help, serkey);
+                            FileStream l = new FileStream(help, FileMode.Open);
+                            cod = (ToCode)json.ReadObject(l);
+                            l.Close();
+                            // удаляем вспомогательный файл
+                            File.Delete(help);
+                            // проверяем совпадение устройста 
+                            devicename = cod.DeviceName;
+                            deviceadress = cod.DeviceAdress;
+                            // если устройства нет рядом просим ввести пароль
+                            NotFoundCheckingPassword password = new NotFoundCheckingPassword(cod);
+                            password.ShowDialog();
+                            // проверка верности пароля
+                            if (password.Pasbool)
+                            {
+                                Redeem();
+                            }
                         }
-                        // создём вспомогательный файл для десериализации и извдечение полей класса
-                        string help;
-                        if (Directory.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming"))
+                        catch (Exception ex)
                         {
-                            help = $"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/PakmanD{num}Help.txt";
-                        }
-                        else
-                        {
-                            help = $"../PakmanD{num}Help.txt";
-                        }
-                        // так быстрее так как в memorystream нет writeallbytes
-                        File.Create(help).Close();
-                        File.WriteAllBytes(help, serkey);
-                        FileStream l = new FileStream(help, FileMode.Open);
-                        cod = (ToCode)json.ReadObject(l);
-                        l.Close();
-                        // удаляем вспомогательный файл
-                        File.Delete(help);
-                        // проверяем совпадение устройста 
-                        devicename = cod.DeviceName;
-                        deviceadress = cod.DeviceAdress;
-                        // если устройства нет рядом просим ввести пароль
-                        NotFoundCheckingPassword password = new NotFoundCheckingPassword(cod);
-                        password.ShowDialog();
-                        // проверка верности пароля
-                        if (password.Pasbool)
-                        {
-                            Redeem();
+                            MessageBox.Show("Two programms are trying to encript file");
+                            this.Close();
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
                         MessageBox.Show("Two programms are trying to encript file");
                         this.Close();
+
                     }
+                    
                     
                 }
             }
