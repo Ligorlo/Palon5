@@ -153,7 +153,7 @@ namespace ToCreate
                 }
                 Encryptback.Text = $"Encrypt back \n {Path.ChangeExtension(path, cod.Rassh)}";
             }
-            catch(IOException ex)
+            catch(Exception ex)
             {
                 MessageBox.Show("Key were deleted");
             }
@@ -202,7 +202,7 @@ namespace ToCreate
                     }
                     File.Move(path, pathcheck);
                 }
-                catch (IOException)
+                catch (Exception)
                 {
                     MessageBox.Show("One file trying to be decrypted in same time");
                     this.Close();
@@ -274,7 +274,7 @@ namespace ToCreate
                     File.Move(direct, pathcheck);
                     // переводим файл в новое расширение
                 }
-                catch
+                catch(Exception ex)
                 {
                     MessageBox.Show("You've already tried to encrypt one folder");
                     this.Close();

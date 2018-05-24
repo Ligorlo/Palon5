@@ -95,3 +95,28 @@
 \\Mac\Home\Desktop\Palon5-masterm\ToCreate\obj\Debug\ToCreate.csproj.CopyComplete
 \\Mac\Home\Desktop\Palon5-masterm\ToCreate\obj\Debug\ToCreate.exe
 \\Mac\Home\Desktop\Palon5-masterm\ToCreate\obj\Debug\ToCreate.pdb
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\bin\Debug\PasswordAndEncrypt3.resx
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\bin\Debug\PasswordAndEncrypt3.cs
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\bin\Debug\ToCreate.exe.config
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\bin\Debug\ToCreate.exe
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\bin\Debug\ToCreate.pdb
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\bin\Debug\InTheHand.Net.Personal.dll
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\bin\Debug\MetroFramework.dll
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\bin\Debug\MetroFramework.Fonts.dll
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\bin\Debug\System.IO.Compression.ZipFile.dll
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\bin\Debug\InTheHand.Net.Personal.xml
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.csprojResolveAssemblyReference.cache
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.Startfrom1.resources
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.DiscoverBLEDevices2.resources
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.Passwordandencrypt3.resources
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.CheckAndDecrypt.resources
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.EncryptBack5.resources
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.NotFoundCheckingPassword.resources
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.UsedDevices.resources
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.Information.resources
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.Properties.Resources.resources
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.csproj.GenerateResource.cache
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.csproj.CoreCompileInputs.cache
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.csproj.CopyComplete
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.exe
+\\Mac\Home\Desktop\Горелик Леонид 176 2018\Программа\ToCreate\obj\Debug\ToCreate.pdb

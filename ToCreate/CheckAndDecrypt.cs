@@ -97,164 +97,178 @@ namespace ToCreate
                     MessageBox.Show("That file has been changed or was encrypted on another computer");
                 }
                 // удаляем старый файл
-                if (File.Exists(path))
+                try
                 {
-                    File.Delete(path);
-                }
-                else
-                {
-                    this.Close();
-                }
-                // конвертим строку обратно в байты 
-                byte [] bytefile = Convert.FromBase64String(todecr);
-                // создаем файл со старым расширением
-                File.WriteAllBytes(path, bytefile);
-                int number = 2;
-                bool exist = true;
-                string pathcheck = Path.ChangeExtension(path, cod.Rassh);
-                if (File.Exists(pathcheck))
-                {
-                    while (exist)
+                    if (File.Exists(path))
                     {
-                        pathcheck = Path.ChangeExtension(path, "");
-                        pathcheck = pathcheck.Remove(pathcheck.Length - 1);
-                        pathcheck = $"{pathcheck}{number}";
-                        number++;
-                        pathcheck = $"{pathcheck}.txt";
-                        pathcheck = Path.ChangeExtension(pathcheck, cod.Rassh);
-                        if (!File.Exists(pathcheck))
-                        {
-                            exist = false;
-                        }
-                    }
-                }
-                File.Move(path, pathcheck);
-                // определяем нужно ли удалять ключ
-                bool b = true;
-                if (args.Length == 2)
-                    b = false;
-                // форма для шифрования при закрытии
-                label1.Visible = false;
-                this.Hide();
-                if (b == true)
-                {
-                    EncryptBack5 closing = new EncryptBack5(pathcheck, key, IV, cod, num, b, directory, deviceadress, cod.Password);
-                    closing.ShowDialog();
-                }
-                else
-                {
-                    // проверка существую ли ключи
-                    if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt"))
-                    {
-                        File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
+                        File.Delete(path);
                     }
                     else
                     {
-                        if (File.Exists($"../Palon/Pakman{num}.txt"))
+                        this.Close();
+                    }
+                    // конвертим строку обратно в байты 
+                    byte[] bytefile = Convert.FromBase64String(todecr);
+                    // создаем файл со старым расширением
+                    File.WriteAllBytes(path, bytefile);
+                    int number = 2;
+                    bool exist = true;
+                    string pathcheck = Path.ChangeExtension(path, cod.Rassh);
+                    if (File.Exists(pathcheck))
+                    {
+                        while (exist)
                         {
-                            File.Delete($"../Palon/Pakman{num}.txt");
+                            pathcheck = Path.ChangeExtension(path, "");
+                            pathcheck = pathcheck.Remove(pathcheck.Length - 1);
+                            pathcheck = $"{pathcheck}{number}";
+                            number++;
+                            pathcheck = $"{pathcheck}.txt";
+                            pathcheck = Path.ChangeExtension(pathcheck, cod.Rassh);
+                            if (!File.Exists(pathcheck))
+                            {
+                                exist = false;
+                            }
                         }
                     }
+                    File.Move(path, pathcheck);
+                    // определяем нужно ли удалять ключ
+                    bool b = true;
+                    if (args.Length == 2)
+                        b = false;
+                    // форма для шифрования при закрытии
+                    label1.Visible = false;
+                    this.Hide();
+                    if (b == true)
+                    {
+                        EncryptBack5 closing = new EncryptBack5(pathcheck, key, IV, cod, num, b, directory, deviceadress, cod.Password);
+                        closing.ShowDialog();
+                    }
+                    else
+                    {
+                        // проверка существую ли ключи
+                        if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt"))
+                        {
+                            File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
+                        }
+                        else
+                        {
+                            if (File.Exists($"../Palon/Pakman{num}.txt"))
+                            {
+                                File.Delete($"../Palon/Pakman{num}.txt");
+                            }
+                        }
+                    }
+                    this.Close();
                 }
-                this.Close();
+                catch (IOException ex)
+                {
+                    MessageBox.Show("One file is trying to ve decrypted twice");
+                }
             }
             else
             {
-                // папка 
-                directory = false;
-                // расшифровываем сам ключ
-                byte[] key = cod.file;
-                byte[] IV = cod.IV;
-                // ксорим с id UTF8
-                byte[] onlykey = Encoding.UTF8.GetBytes(ID);
-                int q = 0;
-                for (int i = 0; i < key.Length; i++)
+                try
                 {
-                    if (q == onlykey.Length)
-                        q = 0;
-                    key[i] = (byte)(key[i] ^ onlykey[q]);
-                }
-                // расшировываем файл
-                string todecr = DecryptAES(FindkeyNumber, key, IV);
-                // удаляем старую папку
-                File.Delete(path);
-                // переводим обратно в байты
-                byte[] bytefile = Convert.FromBase64String(todecr);
-                // записываем обратно
-                File.WriteAllBytes(path, bytefile);
-                // подбираем файл если такие же существуют
-                int number = 2;
-                bool exist = true;
-                string pathcheck = Path.ChangeExtension(path, cod.Rassh);
-                if (File.Exists(pathcheck))
-                {
-                    while (exist)
+                    // папка 
+                    directory = false;
+                    // расшифровываем сам ключ
+                    byte[] key = cod.file;
+                    byte[] IV = cod.IV;
+                    // ксорим с id UTF8
+                    byte[] onlykey = Encoding.UTF8.GetBytes(ID);
+                    int q = 0;
+                    for (int i = 0; i < key.Length; i++)
                     {
-                        pathcheck = Path.ChangeExtension(path, "");
-                        pathcheck = pathcheck.Remove(pathcheck.Length - 1);
-                        pathcheck = $"{pathcheck}{number}";
-                        number++;
-                        pathcheck = $"{pathcheck}.txt";
-                        pathcheck = Path.ChangeExtension(pathcheck, cod.Rassh);
-                        if (!File.Exists(pathcheck))
+                        if (q == onlykey.Length)
+                            q = 0;
+                        key[i] = (byte)(key[i] ^ onlykey[q]);
+                    }
+                    // расшировываем файл
+                    string todecr = DecryptAES(FindkeyNumber, key, IV);
+                    // удаляем старую папку
+                    File.Delete(path);
+                    // переводим обратно в байты
+                    byte[] bytefile = Convert.FromBase64String(todecr);
+                    // записываем обратно
+                    File.WriteAllBytes(path, bytefile);
+                    // подбираем файл если такие же существуют
+                    int number = 2;
+                    bool exist = true;
+                    string pathcheck = Path.ChangeExtension(path, cod.Rassh);
+                    if (File.Exists(pathcheck))
+                    {
+                        while (exist)
                         {
-                            exist = false;
+                            pathcheck = Path.ChangeExtension(path, "");
+                            pathcheck = pathcheck.Remove(pathcheck.Length - 1);
+                            pathcheck = $"{pathcheck}{number}";
+                            number++;
+                            pathcheck = $"{pathcheck}.txt";
+                            pathcheck = Path.ChangeExtension(pathcheck, cod.Rassh);
+                            if (!File.Exists(pathcheck))
+                            {
+                                exist = false;
+                            }
                         }
                     }
-                }
-                File.Move(path, pathcheck);
-                int number2 = 2;
-                bool exist2 = true;
-                string pathcheck2 = Path.ChangeExtension(pathcheck, "");
-                if (Directory.Exists(pathcheck2))
-                {
-                    while (exist2)
+                    File.Move(path, pathcheck);
+                    int number2 = 2;
+                    bool exist2 = true;
+                    string pathcheck2 = Path.ChangeExtension(pathcheck, "");
+                    if (Directory.Exists(pathcheck2))
                     {
-                        pathcheck2 = Path.ChangeExtension(path, "");
-                        pathcheck2 = pathcheck2.Remove(pathcheck2.Length - 1);
-                        pathcheck2 = $"{pathcheck2}{number2}";
-                        number2++;
-                        pathcheck2 = $"{pathcheck2}.txt";
-                        pathcheck2 = Path.ChangeExtension(pathcheck2, "");
-                        if (!File.Exists(pathcheck2))
+                        while (exist2)
                         {
-                            exist2 = false;
+                            pathcheck2 = Path.ChangeExtension(path, "");
+                            pathcheck2 = pathcheck2.Remove(pathcheck2.Length - 1);
+                            pathcheck2 = $"{pathcheck2}{number2}";
+                            number2++;
+                            pathcheck2 = $"{pathcheck2}.txt";
+                            pathcheck2 = Path.ChangeExtension(pathcheck2, "");
+                            if (!File.Exists(pathcheck2))
+                            {
+                                exist2 = false;
+                            }
                         }
                     }
-                }
-                // разархивируем
-                ZipFile.ExtractToDirectory(pathcheck, pathcheck2);
-                // удаляем старыйфайл
-                File.Delete(pathcheck);
-                path = pathcheck2;
-                // проверка надо ли удалять 
-                bool b = true;
-                if (args.Length == 2)
-                    b = false;
-                // форма для шифрования при закрытии
-                label1.Visible = false;
-               
-                this.Hide();
-                if (b == true)
-                {
-                    EncryptBack5 closing = new EncryptBack5(pathcheck, key, IV, cod, num, b, directory, deviceadress, cod.Password);
-                    closing.ShowDialog();
-                }
-                else
-                {
-                    // проверка существую ли ключи
-                    if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt"))
+                    // разархивируем
+                    ZipFile.ExtractToDirectory(pathcheck, pathcheck2);
+                    // удаляем старыйфайл
+                    File.Delete(pathcheck);
+                    path = pathcheck2;
+                    // проверка надо ли удалять 
+                    bool b = true;
+                    if (args.Length == 2)
+                        b = false;
+                    // форма для шифрования при закрытии
+                    label1.Visible = false;
+
+                    this.Hide();
+                    if (b == true)
                     {
-                        File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
+                        EncryptBack5 closing = new EncryptBack5(pathcheck, key, IV, cod, num, b, directory, deviceadress, cod.Password);
+                        closing.ShowDialog();
                     }
                     else
                     {
-                        if (File.Exists($"../Palon/Pakman{num}.txt"))
+                        // проверка существую ли ключи
+                        if (File.Exists($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt"))
                         {
-                            File.Delete($"../Palon/Pakman{num}.txt");
+                            File.Delete($"C:/Users/{Environment.UserName}/AppData/Roaming/Palon/Pakman{num}.txt");
                         }
+                        else
+                        {
+                            if (File.Exists($"../Palon/Pakman{num}.txt"))
+                            {
+                                File.Delete($"../Palon/Pakman{num}.txt");
+                            }
+                        }
+                        this.Close();
                     }
-                    this.Close();
+                }
+                catch(IOException ex)
+                {
+                    MessageBox.Show("One directory is trying to ve decrypted twice");
                 }
             }
         }

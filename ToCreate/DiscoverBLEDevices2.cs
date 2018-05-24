@@ -83,9 +83,10 @@ namespace ToCreate
                             {
                                 // прочитываем то что уже есть в файле
                                     DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Devices[]));
-                                    FileStream str = new FileStream(pathdev, FileMode.OpenOrCreate);
+                                    
                                 try
                                 {
+                                    FileStream str = new FileStream(pathdev, FileMode.OpenOrCreate);
                                     Devices[] devices = (Devices[])ser.ReadObject(str);
                                     str.Close();
                                     bool b = true;
@@ -112,18 +113,25 @@ namespace ToCreate
                                 // проверка десериализации
                                 catch (Exception ex)
                                 {
-                                    Console.WriteLine("File was changed");
+                                    MessageBox.Show("Something has happened");
                                 }
                             }
                             // папки не существует, надо создать новую
                             else
                             {
-                                Devices[] devices = new Devices[1];
-                                devices[0] = dev;
-                                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Devices[]));
-                                FileStream str = new FileStream(pathdev, FileMode.OpenOrCreate);
-                                ser.WriteObject(str, devices);
-                                str.Close();
+                                try
+                                {
+                                    Devices[] devices = new Devices[1];
+                                    devices[0] = dev;
+                                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Devices[]));
+                                    FileStream str = new FileStream(pathdev, FileMode.OpenOrCreate);
+                                    ser.WriteObject(str, devices);
+                                    str.Close();
+                                }
+                                catch(Exception ex)
+                                {
+                                    MessageBox.Show("Something has happened");
+                                }
                             }
                             // форма запроса пароля и шифрования
                             Passwordandencrypt3 Passwordandshifr = new Passwordandencrypt3(path, device.DeviceName, device.DeviceAddress.ToString(), b);
